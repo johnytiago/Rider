@@ -4,6 +4,7 @@ const routes = require('./routes/routes')
 
 routes(server)
 
-server.listen(80,()=>{
-    console.log('Server running...')
+var port = 8080
+server.listen( port ,()=>{
+  console.log('Server running at http://localhost:' +  port )
 })

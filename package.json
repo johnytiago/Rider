@@ -5,9 +5,8 @@
   "main": "server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "sudo node server/server",
-    "native": "node node_modules/react-native/local-cli/cli.js start",
-    "server": "sudo node server/server"
+    "start": "node server/server",
+    "native": "node node_modules/react-native/local-cli/cli.js start"
   },
   "author": "",
   "license": "ISC",
