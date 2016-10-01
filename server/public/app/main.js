@@ -48371,9 +48371,17 @@
 
 	var _reactBootstrap = __webpack_require__(269);
 
-	var _Header = __webpack_require__(520);
+	var _Navigation = __webpack_require__(524);
 
-	var _Header2 = _interopRequireDefault(_Header);
+	var _Navigation2 = _interopRequireDefault(_Navigation);
+
+	var _Schedule = __webpack_require__(527);
+
+	var _Schedule2 = _interopRequireDefault(_Schedule);
+
+	var _Day = __webpack_require__(528);
+
+	var _Day2 = _interopRequireDefault(_Day);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48395,14 +48403,17 @@
 	    _createClass(Calendar, [{
 	        key: 'render',
 	        value: function render() {
+	            var events = {
+	                '01/10/2016': [{ acronym: 'AL', start: '10:00', end: '11:30' }, { acronym: 'BD', start: '11:30', end: '13:00' }],
+	                '02/10/2016': [{ acronym: 'AL', start: '10:00', end: '11:30' }],
+	                '03/10/2016': [{ acronym: 'AL', start: '10:00', end: '11:30' }],
+	                '04/10/2016': [{ acronym: 'AL', start: '10:00', end: '11:30' }]
+	            };
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    'Map'
-	                )
+	                _react2.default.createElement(_Navigation2.default, { state: 'calendar' }),
+	                _react2.default.createElement(_Schedule2.default, { events: events })
 	            );
 	        }
 	    }]);
@@ -48411,6 +48422,694 @@
 	}(_react.Component);
 
 	exports.default = Calendar;
+
+/***/ },
+/* 524 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(269);
+
+	var _Step = __webpack_require__(525);
+
+	var _Step2 = _interopRequireDefault(_Step);
+
+	var _Next = __webpack_require__(526);
+
+	var _Next2 = _interopRequireDefault(_Next);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Navigation = function (_Component) {
+	    _inherits(Navigation, _Component);
+
+	    function Navigation() {
+	        _classCallCheck(this, Navigation);
+
+	        return _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).apply(this, arguments));
+	    }
+
+	    _createClass(Navigation, [{
+	        key: 'render',
+	        value: function render() {
+
+	            var active = {};
+	            active[this.props.state] = true;
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    _reactBootstrap.Breadcrumb,
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Grid,
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Row,
+	                            { className: 'show-grid' },
+	                            _react2.default.createElement(_Step2.default, { active: active.calendar, title: 'Calendar', description: 'Bla bla bla' }),
+	                            _react2.default.createElement(_Next2.default, null),
+	                            _react2.default.createElement(_Step2.default, { active: active.map, title: 'Map', description: 'Bla bla bla' }),
+	                            _react2.default.createElement(_Next2.default, null),
+	                            _react2.default.createElement(_Step2.default, { active: active.person, title: 'Person', description: 'Bla bla bla' })
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Navigation;
+	}(_react.Component);
+
+	exports.default = Navigation;
+
+/***/ },
+/* 525 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(269);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Step = function (_Component) {
+	    _inherits(Step, _Component);
+
+	    function Step() {
+	        _classCallCheck(this, Step);
+
+	        return _possibleConstructorReturn(this, (Step.__proto__ || Object.getPrototypeOf(Step)).apply(this, arguments));
+	    }
+
+	    _createClass(Step, [{
+	        key: 'render',
+	        value: function render() {
+	            var title = void 0;
+	            if (this.props.active) title = _react2.default.createElement(
+	                'h3',
+	                { style: { textAlign: 'center', fontWeight: 'bold' } },
+	                ' ',
+	                this.props.title,
+	                ' '
+	            );else title = _react2.default.createElement(
+	                'h3',
+	                { style: { textAlign: 'center' } },
+	                _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    this.props.title
+	                )
+	            );
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 3 },
+	                    title,
+	                    _react2.default.createElement(
+	                        'p',
+	                        { style: { textAlign: 'center' } },
+	                        ' ',
+	                        this.props.description,
+	                        ' '
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Step;
+	}(_react.Component);
+
+	exports.default = Step;
+
+/***/ },
+/* 526 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(269);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Next = function (_Component) {
+	    _inherits(Next, _Component);
+
+	    function Next() {
+	        _classCallCheck(this, Next);
+
+	        return _possibleConstructorReturn(this, (Next.__proto__ || Object.getPrototypeOf(Next)).apply(this, arguments));
+	    }
+
+	    _createClass(Next, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xs: 1 },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        { style: { marginTop: '30px' } },
+	                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'chevron-right' })
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Next;
+	}(_react.Component);
+
+	exports.default = Next;
+
+/***/ },
+/* 527 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(269);
+
+	var _Day = __webpack_require__(528);
+
+	var _Day2 = _interopRequireDefault(_Day);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Schedule = function (_Component) {
+	    _inherits(Schedule, _Component);
+
+	    function Schedule() {
+	        _classCallCheck(this, Schedule);
+
+	        return _possibleConstructorReturn(this, (Schedule.__proto__ || Object.getPrototypeOf(Schedule)).apply(this, arguments));
+	    }
+
+	    _createClass(Schedule, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            document.getElementById('schedule').scrollTop = 327;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            var events = this.props.events;
+
+	            var dates = Object.keys(events);
+	            var header = dates.map(function (day) {
+	                return _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { key: day, xs: 3 },
+	                    _react2.default.createElement(_reactBootstrap.Panel, { key: day, collapsible: true, defaultExpanded: true, header: day })
+	                );
+	            });
+
+	            var days = [];
+	            for (var key in events) {
+	                days.push(_react2.default.createElement(_Day2.default, { key: key, date: key, events: events[key] }));
+	            }
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'schedule-header' },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Row,
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Col,
+	                            { xs: 1 },
+	                            _react2.default.createElement(_reactBootstrap.Panel, { collapsible: true, defaultExpanded: true, header: ' \xA0 ' })
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Col,
+	                            { xs: 11 },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Row,
+	                                null,
+	                                header
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Row,
+	                    { className: 'schedule', id: 'schedule' },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Col,
+	                        { xs: 1 },
+	                        _react2.default.createElement(
+	                            _reactBootstrap.ListGroup,
+	                            { fill: true },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '00h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '00h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '01h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '01h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '02h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '02h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '03h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '03h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '04h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '04h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '05h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '05h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '06h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '06h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '07h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '07h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '08h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '08h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '09h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '09h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '10h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '10h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '11h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '11h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '12h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '11h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '12h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '12h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '13h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '13h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '14h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '14h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '15h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '15h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '16h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '16h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '17h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '17h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '18h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '18h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '19h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '19h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '20h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '20h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '21h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '21h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '22h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '22h30'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '23h00'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroupItem,
+	                                null,
+	                                '23h30'
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Col,
+	                        { xs: 11 },
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Row,
+	                            null,
+	                            days
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Schedule;
+	}(_react.Component);
+
+	exports.default = Schedule;
+
+/***/ },
+/* 528 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(269);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Schedule = function (_Component) {
+	    _inherits(Schedule, _Component);
+
+	    function Schedule() {
+	        _classCallCheck(this, Schedule);
+
+	        return _possibleConstructorReturn(this, (Schedule.__proto__ || Object.getPrototypeOf(Schedule)).apply(this, arguments));
+	    }
+
+	    _createClass(Schedule, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            document.getElementById('schedule').scrollTop = 327;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            var hours = ['00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'];
+
+	            var last_acronym = null;
+	            var last = 0;
+	            var events = this.props.events;
+	            var blocks = [];
+	            for (var i = 0; i < hours.length; i++) {
+	                if (events[last].end === hours[i]) {
+	                    last_acronym = null;
+	                    if (last < events.length - 1) last++;
+	                }
+	                if (events[last].start === hours[i]) {
+	                    blocks.push(_react2.default.createElement(
+	                        _reactBootstrap.ListGroupItem,
+	                        { className: 'start_event', key: i, href: '#', active: true },
+	                        ' ',
+	                        events[last].acronym,
+	                        ' '
+	                    ));
+	                    last_acronym = events[last].acronym;
+	                }
+
+	                if (last_acronym) {
+	                    blocks.push(_react2.default.createElement(
+	                        _reactBootstrap.ListGroupItem,
+	                        { key: i, href: '#', active: true },
+	                        ' \xA0 '
+	                    ));
+	                    last_acronym = events[last].acronym;
+	                } else blocks.push(_react2.default.createElement(
+	                    _reactBootstrap.ListGroupItem,
+	                    { key: i, href: '#' },
+	                    ' \xA0 '
+	                ));
+	            }
+
+	            return _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { xs: 3 },
+	                _react2.default.createElement(
+	                    _reactBootstrap.ListGroup,
+	                    { fill: true },
+	                    blocks
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Schedule;
+	}(_react.Component);
+
+	exports.default = Schedule;
 
 /***/ }
 /******/ ]);

@@ -3,3 +3,36 @@ $font-family-base: 'Roboto', sans-serif;
 // Import bootstrap and fontawesome
 @import "bootstrap";
 @import "font-awesome";
+
+html, body {
+    overflow-x: hidden;
+}
+
+.start_event {
+    border-top: 1px solid #000000 !important;
+}
+.schedule .list-group-item {
+    max-height: 22px;
+    padding-top: 2px;
+    text-align: center;
+}
+.schedule {
+    height: calc( 100% - 240px);
+    overflow-y: scroll;
+}
+.schedule li.list-group-item {
+    min-width:42px;
+    padding: 1px ;
+    text-align: center;
+}
+.schedule-header .panel {
+    min-width:42px;
+}
+.schedule-header .panel{
+    margin-bottom: 0;
+    max-height: 40px;
+    overflow-y: hidden;
+    .panel-title {
+        line-height: 23px;
+    }
+}

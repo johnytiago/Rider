@@ -2,7 +2,7 @@
 const gulp = require('gulp')
 const webpack = require('gulp-webpack')
 const uglify = require('gulp-uglify')
-//const sass = require('gulp-sass')
+const sass = require('gulp-sass')
 const concat = require('gulp-concat')
 const cleanCSS = require('gulp-clean-css')
 const bower = require('gulp-bower')
@@ -40,13 +40,18 @@ gulp.task('css',()=>{
         .pipe(gulp.dest(dist+'css'))
 
     gulp.src('bower_components/bootstrap-sass/assets/fonts/bootstrap/*.*')
-        .pipe(gulp.dest(dist+'fonts'))
+        .pipe(gulp.dest(dist+'fonts/bootstrap'))
 })
 
 
 gulp.task('assets',()=>{
     gulp.src("webapp/images/*.*")
         .pipe(gulp.dest(dist+'images'))
+})
+
+gulp.task('web',()=>{
+    gulp.src('web/*.html')
+        .pipe(gulp.dest(dist))
 })
 
 
