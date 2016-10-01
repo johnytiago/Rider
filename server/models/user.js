@@ -6,6 +6,8 @@ module.exports = mongoose.model('User', {
 	istID:  		String,
 	email: 			String,
 	phone: 			String,
+	coordinates: 	String,
+	campus: 		String, 
 	accessToken: 	String,
 	refreshToken: 	String
 });
