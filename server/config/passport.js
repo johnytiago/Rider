@@ -8,8 +8,12 @@ module.exports = function(passport){
     OAuth2.prototype.userProfile = function(token,done){
         var result = {};
         fenix.person(token,function(err,user){
+            
+            
             result.username = user.username;
             result.name = user.name;
+            result.email = user.email;
+            result.campus = user.campus;
             result.accessToken = user.accessToken;
             result.refreshToken = user.refreshToken;
 
@@ -58,7 +62,9 @@ module.exports = function(passport){
                             
                     User.create({
                         username :      profile.username,
-                        name :         profile.name,
+                        name :          profile.name,
+                        email:          profile.email,
+                        campus:         profile.campus,
                         accessToken :  accessToken,
                         refreshToken : refreshToken
 
