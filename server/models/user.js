@@ -4,10 +4,15 @@ module.exports = mongoose.model('User', {
 	username: 		String,
 	name: 			String,
 	email: 			String,
+	driver: 		Boolean,
 	campus: 		String,
 	phone: 			String,
-	coordinates: 	String,
-	campus: 		String, 
+	home: 	        String,
+	calendar: 	[{
+					start: Date,
+					end: Date,
+					acronym: String
+				}],
 	accessToken: 	String,
 	refreshToken: 	String
 });
