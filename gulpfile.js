@@ -2,7 +2,7 @@
 const gulp = require('gulp')
 const webpack = require('gulp-webpack')
 const uglify = require('gulp-uglify')
-const sass = require('gulp-sass')
+//const sass = require('gulp-sass')
 const concat = require('gulp-concat')
 const cleanCSS = require('gulp-clean-css')
 const bower = require('gulp-bower')
@@ -26,11 +26,6 @@ gulp.task('app', ()=>{
             }
         }))
         .pipe(gulp.dest(dist+'app/'))
-})
-
-gulp.task('web',()=>{
-    gulp.src('web/index.html')
-        .pipe(gulp.dest(dist))
 })
 
 gulp.task('css',()=>{
