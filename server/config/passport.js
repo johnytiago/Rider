@@ -1,6 +1,7 @@
 var OAuth2  = require("passport-oauth2").Strategy,
     fenix   = require("../services/fenix"),
     User    = require("../models/user");
+    Filter = require("../controllers/fenixResponseFilter");
 
 module.exports = function(passport){
 
@@ -46,15 +47,20 @@ module.exports = function(passport){
             callbackURL: "http://rider.n1z.pt/auth/fenix/callback"
         },
         function(accessToken, refreshToken, profile, done) {
+
             User.findOne({ 'username' : profile.username }, function(err, user) {
 
                 if (err)
                     return done(err);
+
                 if (user) {
                     user.accessToken = accessToken;
                     user.name = profile.name;
                     user.save()
 
+                    fenix.calendar(accessToken ,function(err,res){
+                        Filter.addCalendar(profile.username,res,function(err,out){});
+                    });
 
                     return done(null, user);
                 }
@@ -71,9 +77,19 @@ module.exports = function(passport){
                     }, function(err,user){
                         if (err)
                             return done(err);
+
+                        fenix.calendar(accessToken ,function(err,res){
+                            Filter.addCalendar(profile.username,res,function(err,out){});
+                        });
+                        
                         return done(null, user);
                     })
-                }  
+                }
+
+               
+               
+                    
+
             })
         }
     ));

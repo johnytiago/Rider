@@ -9,8 +9,8 @@ module.exports = mongoose.model('User', {
 	phone: 			String,
 	home: 	        String,
 	calendar: 	[{
-					start: Date,
-					end: Date,
+					start: String,
+					end: String,
 					acronym: String
 				}],
 	accessToken: 	String,

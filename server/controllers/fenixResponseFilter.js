@@ -1,5 +1,5 @@
 var collection = require('lodash/collection');
-var User = require('../models/user.js');
+var User = require('../models/user');
 
 function getCourseAcronym(fullname) {
 	var acronym = '';
@@ -10,7 +10,11 @@ function getCourseAcronym(fullname) {
 	return acronym;
 }
 
-module.exports.filterByDay = function (username, date, callback){
+module.exports.filterByDay = function (username, date_str, callback){
+
+	console.log(date_str);
+	var date = new Date(date_str);
+	console.log(date);
 
 	User.findOne({ 'username' : username}, function(err, user){
 		
@@ -22,7 +26,7 @@ module.exports.filterByDay = function (username, date, callback){
 		var ordered = collection.sortBy(filtered, [
 			function(o) { return o.start.getHours(); },
 			function(o) { return o.start.getMinutes(); },
-			function(o) { return o.end.getHours(); }
+			function(o) { return o.end.getHours(); },
 			function(o) { return o.end.getMinutes(); }]);
 
 		callback(null, ordered);
@@ -32,19 +36,28 @@ module.exports.filterByDay = function (username, date, callback){
 
 module.exports.addCalendar = function (username, data, callback){
 
-	parsed = [];
+	var parsed = [];
+	var brick;
+	var start_date;
+	var end_date;
+	
+	data.events.forEach((e)=> {
 
-	for(i=0; i<data[0].events.length; i++){
-
-		var brick = {acronym: getCourseAcronym(data[0].events[i].course.name),
-					start: new Date(data[0].events[i].classPeriod.start),
-					end: new Date(data[0].events[i].classPeriod.end)};
+		start_date = e.classPeriod.start;
+		end_date = e.classPeriod.end;
+		
+		brick = {acronym: getCourseAcronym(e.course.name),
+				start: start_date,
+				end: end_date};
 
 		parsed.push(brick);
-	}
+
+	})
 
 	User.findOne({ 'username' : username}, function(err, user){
+
 		user.calendar = parsed;
+		user.save();
 		callback();
 	});
 }

@@ -9,6 +9,7 @@ const routes = require('./routes/routes')
 require("./config/passport")( passport )
 require("./config/express")( server, passport )
 
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/rider')
 
 routes(server)
