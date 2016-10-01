@@ -37,9 +37,9 @@ module.exports = function(passport){
     passport.use(new OAuth2({
             authorizationURL: 'https://fenix.tecnico.ulisboa.pt/oauth/userdialog',
             tokenURL: 'https://fenix.tecnico.ulisboa.pt/oauth/access_token',
-            clientID: "1132965128044570",
-            clientSecret: "FJL67JqPbgJrD7bBfdnTUdvFB7SYTwhpfyw09cMtiiytD8BsMs1LWVGTkA2Y4H5RyB0AmdqqL24c4d8Nr8DETw==",
-            callbackURL: "http://shelf.neeti-ist.pt/auth/fenix/callback"
+            clientID: "1695915081465870",
+            clientSecret: "NCwwzZYQcRNn5aJzYcatEwOp/R4UIJO2ybasERa9tpH7U+DuJO/+E3ZVZc5dd568cGIr5ryH9lC2qQrPPJte+w==",
+            callbackURL: "http://rider.n1z.pt/auth/fenix/callback"
         },
         function(accessToken, refreshToken, profile, done) {
             User.findOne({ 'username' : profile.username }, function(err, user) {
