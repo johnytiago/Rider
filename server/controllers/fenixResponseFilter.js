@@ -43,8 +43,11 @@ module.exports.addCalendar = function (username, data, callback){
 	
 	data.events.forEach((e)=> {
 
-		start_date = e.classPeriod.start;
-		end_date = e.classPeriod.end;
+		start_str = e.classPeriod.start;
+		end_str = e.classPeriod.end;
+
+		start_date = start_str.substring(6) + start_str.substring(3, 5) + start_str.substring(0, 2);
+		end_date = end_str.substring(6) + end_str.substring(3, 5) + end_str.substring(0, 2);
 		
 		brick = {acronym: getCourseAcronym(e.course.name),
 				start: start_date,
