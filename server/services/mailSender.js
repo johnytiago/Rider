@@ -1,8 +1,8 @@
 var helper = require('sendgrid').mail;
 
-module.exports = function (from_in, to_in, subject_in, content_in, callback) {
+module.exports = function (to_in, subject_in, content_in) {
 
-	var from_email = new helper.Email(from_in);
+	var from_email = new helper.Email('noreply@rider.n1z.pt');
 	var to_email = new helper.Email(to_in);
 	var content = new helper.Content('text/plain', content_in);
 	var mail = new helper.Mail(from_email, subject_in, to_email, content);
