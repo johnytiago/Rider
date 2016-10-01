@@ -1,12 +1,33 @@
 
 import React, {Component} from 'react'
-import { Row, Col, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap';
 
-import Navigation from './Navigation'
+import Navigation from '../Navigation/Navigation'
 import Schedule from './Schedule'
+import List from './List'
 import Day from './Day'
 
 export default class Calendar extends Component {
+    constructor(){
+        super()
+        this.state = {
+            hours : []
+        }
+    }
+    addHour(h){
+        let hours = this.state.hours
+        hours.push(h)
+        this.setState({
+            hours
+        })
+    }
+    removeHour(h){
+        let hours = this.state.hours
+        hours.splice(hours.indexOf(h), 1)
+        this.setState({
+            hours
+        })
+    }
     render() {
         let events = {
             '01/10/2016' : [
@@ -25,7 +46,10 @@ export default class Calendar extends Component {
         }
         return <div>
             <Navigation state='calendar' />
-            <Schedule events={events} />
+            <Row>
+                <Col md={3}> <List hours={this.state.hours} /> </Col>
+                <Col md={9}> <Schedule addHour={this.addHour.bind(this)} removeHour={this.removeHour.bind(this)} events={events} /> </Col>
+            </Row>
         </div>
     }
 }

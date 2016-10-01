@@ -7,10 +7,17 @@ import Header from './Header'
 export default class App extends Component{
 
     render() {
-        return <div>
-            <Header />
-            <Grid>{this.props.children}</Grid>
-      </div>
+        if(this.props.children.type.name==='Map'){
+            return <div>
+                <Header />
+                <div style={{marginTop:'-20px'}}>{this.props.children}</div>
+            </div>
+        }else{
+            return <div>
+                <Header />
+                <Grid>{this.props.children}</Grid>
+            </div>
+        }
     }
 
 }

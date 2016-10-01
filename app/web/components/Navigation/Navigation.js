@@ -12,15 +12,15 @@ export default class Navigation extends Component {
         let active = {}
         active[this.props.state]=true
 
-        return <div>
+        return <div class='hidden-xs'>
             <Breadcrumb>
                 <Grid>
                      <Row className="show-grid">
-                        <Step active={active.calendar} title="Calendar" description="Bla bla bla" />
+                        <Step link='/calendar' active={active.calendar} title="Calendar" description="Bla bla bla" />
                         <Next />
-                        <Step active={active.map} title="Map" description="Bla bla bla" />
+                        <Step link='/map' active={active.map} title="Map" description="Bla bla bla" />
                         <Next />
-                        <Step active={active.person} title="Person" description="Bla bla bla" />
+                        <Step link='/person' active={active.person} title="Person" description="Bla bla bla" />
                      </Row>
                 </Grid>
             </Breadcrumb>

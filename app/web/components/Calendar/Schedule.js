@@ -11,88 +11,99 @@ export default class Schedule extends Component {
     }
     render() {
 
-        let events = this.props.events;
+        let events = this.props.events
 
         let dates = Object.keys(events)
-        let header = dates.map(day => <Col key={day} xs={3}><Panel key={day} collapsible defaultExpanded header={day}></Panel></Col>)
+        let j = 0, cl2 = ''
+        let header = dates.map((day)=>{
+            j++
+            if(j>1)
+                cl2 = 'hidden-xs'
+            let text = day.substring(0,5)
+            return <Col class={cl2} key={day} xs={12} md={3}><Panel collapsible defaultExpanded header={text}></Panel></Col>
+        })
 
         let days = []
+        let k = 0
         for (let key in events){
-            days.push(<Day key={key} date={key} events={events[key]} />)
+            k++
+            if(k>1){
+                days.push(<Day key={key} class='hidden-xs' add={this.props.addHour} remove={this.props.removeHour}  date={key} events={events[key]}  ></Day>)
+            }else{
+                days.push(<Day key={key} add={this.props.addHour} remove={this.props.removeHour}  date={key} events={events[key]}  ></Day>)
+            }
         }
 
-        return <div>
+        return <Panel>
             <div class="schedule-header">
             <Row>
-                <Col xs={1}>
+                <Col md={1} xs={3}>
                     <Panel collapsible defaultExpanded header=" &nbsp; "></Panel>
                 </Col>
-                <Col xs={11}>
+                <Col md={11} xs={9}>
                     <Row>{header}</Row>
                 </Col>
             </Row>
             </div>
             <Row class="schedule" id="schedule">
-            <Col xs={1}>
+            <Col xs={3} md={1}>
                 <ListGroup fill>
-                    <ListGroupItem>00h00</ListGroupItem>
-                    <ListGroupItem>00h30</ListGroupItem>
-                    <ListGroupItem>01h00</ListGroupItem>
-                    <ListGroupItem>01h30</ListGroupItem>
-                    <ListGroupItem>02h00</ListGroupItem>
-                    <ListGroupItem>02h30</ListGroupItem>
-                    <ListGroupItem>03h00</ListGroupItem>
-                    <ListGroupItem>03h30</ListGroupItem>
-                    <ListGroupItem>04h00</ListGroupItem>
-                    <ListGroupItem>04h30</ListGroupItem>
-                    <ListGroupItem>05h00</ListGroupItem>
-                    <ListGroupItem>05h30</ListGroupItem>
-                    <ListGroupItem>06h00</ListGroupItem>
-                    <ListGroupItem>06h30</ListGroupItem>
-                    <ListGroupItem>07h00</ListGroupItem>
-                    <ListGroupItem>07h30</ListGroupItem>
-                    <ListGroupItem>08h00</ListGroupItem>
-                    <ListGroupItem>08h30</ListGroupItem>
-                    <ListGroupItem>09h00</ListGroupItem>
-                    <ListGroupItem>09h30</ListGroupItem>
-                    <ListGroupItem>10h00</ListGroupItem>
-                    <ListGroupItem>10h30</ListGroupItem>
-                    <ListGroupItem>11h00</ListGroupItem>
-                    <ListGroupItem>11h30</ListGroupItem>
-                    <ListGroupItem>12h00</ListGroupItem>
-                    <ListGroupItem>11h30</ListGroupItem>
-                    <ListGroupItem>12h00</ListGroupItem>
-                    <ListGroupItem>12h30</ListGroupItem>
-                    <ListGroupItem>13h00</ListGroupItem>
-                    <ListGroupItem>13h30</ListGroupItem>
-                    <ListGroupItem>14h00</ListGroupItem>
-                    <ListGroupItem>14h30</ListGroupItem>
-                    <ListGroupItem>15h00</ListGroupItem>
-                    <ListGroupItem>15h30</ListGroupItem>
-                    <ListGroupItem>16h00</ListGroupItem>
-                    <ListGroupItem>16h30</ListGroupItem>
-                    <ListGroupItem>17h00</ListGroupItem>
-                    <ListGroupItem>17h30</ListGroupItem>
-                    <ListGroupItem>18h00</ListGroupItem>
-                    <ListGroupItem>18h30</ListGroupItem>
-                    <ListGroupItem>19h00</ListGroupItem>
-                    <ListGroupItem>19h30</ListGroupItem>
-                    <ListGroupItem>20h00</ListGroupItem>
-                    <ListGroupItem>20h30</ListGroupItem>
-                    <ListGroupItem>21h00</ListGroupItem>
-                    <ListGroupItem>21h30</ListGroupItem>
-                    <ListGroupItem>22h00</ListGroupItem>
-                    <ListGroupItem>22h30</ListGroupItem>
-                    <ListGroupItem>23h00</ListGroupItem>
-                    <ListGroupItem>23h30</ListGroupItem>
+                    <ListGroupItem key={1}>00h00</ListGroupItem>
+                    <ListGroupItem key={2}>00h30</ListGroupItem>
+                    <ListGroupItem key={3}>01h00</ListGroupItem>
+                    <ListGroupItem key={4}>01h30</ListGroupItem>
+                    <ListGroupItem key={5}>02h00</ListGroupItem>
+                    <ListGroupItem key={6}>02h30</ListGroupItem>
+                    <ListGroupItem key={7}>03h00</ListGroupItem>
+                    <ListGroupItem key={8}>03h30</ListGroupItem>
+                    <ListGroupItem key={9}>04h00</ListGroupItem>
+                    <ListGroupItem key={10}>04h30</ListGroupItem>
+                    <ListGroupItem key={11}>05h00</ListGroupItem>
+                    <ListGroupItem key={12}>05h30</ListGroupItem>
+                    <ListGroupItem key={13}>06h00</ListGroupItem>
+                    <ListGroupItem key={14}>06h30</ListGroupItem>
+                    <ListGroupItem key={15}>07h00</ListGroupItem>
+                    <ListGroupItem key={16}>07h30</ListGroupItem>
+                    <ListGroupItem key={17}>08h00</ListGroupItem>
+                    <ListGroupItem key={18}>08h30</ListGroupItem>
+                    <ListGroupItem key={19}>09h00</ListGroupItem>
+                    <ListGroupItem key={20}>09h30</ListGroupItem>
+                    <ListGroupItem key={21}>10h00</ListGroupItem>
+                    <ListGroupItem key={22}>10h30</ListGroupItem>
+                    <ListGroupItem key={23}>11h00</ListGroupItem>
+                    <ListGroupItem key={24}>11h30</ListGroupItem>
+                    <ListGroupItem key={25}>12h00</ListGroupItem>
+                    <ListGroupItem key={26}>12h30</ListGroupItem>
+                    <ListGroupItem key={27}>13h00</ListGroupItem>
+                    <ListGroupItem key={28}>13h30</ListGroupItem>
+                    <ListGroupItem key={29}>14h00</ListGroupItem>
+                    <ListGroupItem key={30}>14h30</ListGroupItem>
+                    <ListGroupItem key={31}>15h00</ListGroupItem>
+                    <ListGroupItem key={32}>15h30</ListGroupItem>
+                    <ListGroupItem key={33}>16h00</ListGroupItem>
+                    <ListGroupItem key={34}>16h30</ListGroupItem>
+                    <ListGroupItem key={35}>17h00</ListGroupItem>
+                    <ListGroupItem key={36}>17h30</ListGroupItem>
+                    <ListGroupItem key={37}>18h00</ListGroupItem>
+                    <ListGroupItem key={38}>18h30</ListGroupItem>
+                    <ListGroupItem key={39}>19h00</ListGroupItem>
+                    <ListGroupItem key={40}>19h30</ListGroupItem>
+                    <ListGroupItem key={41}>20h00</ListGroupItem>
+                    <ListGroupItem key={42}>20h30</ListGroupItem>
+                    <ListGroupItem key={43}>21h00</ListGroupItem>
+                    <ListGroupItem key={44}>21h30</ListGroupItem>
+                    <ListGroupItem key={45}>22h00</ListGroupItem>
+                    <ListGroupItem key={46}>22h30</ListGroupItem>
+                    <ListGroupItem key={47}>23h00</ListGroupItem>
+                    <ListGroupItem key={48}>23h30</ListGroupItem>
                 </ListGroup>
             </Col>
-            <Col xs={11}>
+            <Col xs={9} md={11}>
             <Row>
                 {days}
             </Row>
             </Col>
             </Row>
-        </div>
+        </Panel>
     }
 }

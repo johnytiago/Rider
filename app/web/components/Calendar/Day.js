@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import { Row, Col, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 
+import Event from './Event'
+
 export default class Schedule extends Component {
     componentDidMount(){
         document.getElementById('schedule').scrollTop = 327
@@ -26,22 +28,24 @@ export default class Schedule extends Component {
                     last++
             }
             if(events[last].start === hours[i]){
-                blocks.push(<ListGroupItem class='start_event' key={i} href="#" active> {events[last].acronym} </ListGroupItem>)
+                blocks.push(<Event add={this.props.add} remove={this.props.remove} date={this.props.date+' '+hours[i]} first={true} key={i} title={events[last].acronym} />)
                 last_acronym = events[last].acronym
             }
 
             if(last_acronym){
-                blocks.push(<ListGroupItem key={i} href="#" active> &nbsp; </ListGroupItem>)
+                blocks.push(<Event add={this.props.add} remove={this.props.remove} date={this.props.date+' '+hours[i]} key={i} title={events[last].acronym} />)
                 last_acronym = events[last].acronym
             }
             else
-                blocks.push(<ListGroupItem key={i} href="#"> &nbsp; </ListGroupItem>)
+                blocks.push(<Event add={this.props.add} remove={this.props.remove} date={this.props.date+' '+hours[i]} key={i} />)
         }
 
-        return <Col xs={3}>
+        return <div>
+                <Col xs={3}>
                     <ListGroup fill>
                         { blocks }
                     </ListGroup>
                 </Col>
+                </div>
     }
 }

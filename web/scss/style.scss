@@ -9,7 +9,11 @@ html, body {
 }
 
 .start_event {
-    border-top: 1px solid #000000 !important;
+    border: none;
+    border-top: 1px solid #ddd !important;
+}
+.event {
+    border: none;
 }
 .schedule .list-group-item {
     max-height: 22px;
@@ -21,12 +25,12 @@ html, body {
     overflow-y: scroll;
 }
 .schedule li.list-group-item {
-    min-width:42px;
+    min-width:46px;
     padding: 1px ;
     text-align: center;
 }
 .schedule-header .panel {
-    min-width:42px;
+    min-width:46px;
 }
 .schedule-header .panel{
     margin-bottom: 0;
@@ -34,5 +38,27 @@ html, body {
     overflow-y: hidden;
     .panel-title {
         line-height: 23px;
+    }
+}
+.matches {
+
+    overflow-x: hidden;
+
+    width: calc(100% - 40px);
+    position:absolute;
+    z-index: 999;
+    bottom:30px;
+    left: 30px;
+    max-width:350px;
+    .list-group {
+        overflow-y: scroll;
+        max-height: 150px;
+    }
+    .list-group-item {
+        margin-top:3px;
+    }
+    .panel {
+        border: none;
+        background: none;
     }
 }

@@ -74,6 +74,10 @@
 
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 
+	var _Map = __webpack_require__(531);
+
+	var _Map2 = _interopRequireDefault(_Map);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var app = document.getElementById('app');
@@ -88,7 +92,8 @@
 	            _reactRouter.Route,
 	            { path: '/', component: _App2.default },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _Intro2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/calendar', component: _Calendar2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/calendar', component: _Calendar2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/map', component: _Map2.default })
 	        )
 	    )
 	), app);
@@ -29348,16 +29353,29 @@
 	    _createClass(App, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(_Header2.default, null),
-	                _react2.default.createElement(
-	                    _reactBootstrap.Grid,
+	            if (this.props.children.type.name === 'Map') {
+	                return _react2.default.createElement(
+	                    'div',
 	                    null,
-	                    this.props.children
-	                )
-	            );
+	                    _react2.default.createElement(_Header2.default, null),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { style: { marginTop: '-20px' } },
+	                        this.props.children
+	                    )
+	                );
+	            } else {
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(_Header2.default, null),
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Grid,
+	                        null,
+	                        this.props.children
+	                    )
+	                );
+	            }
 	        }
 	    }]);
 
@@ -48182,25 +48200,6 @@
 	                                )
 	                            )
 	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _reactBootstrap.Nav,
-	                        { pullRight: true },
-	                        _react2.default.createElement(
-	                            _reactBootstrap.NavItem,
-	                            { eventKey: 1, href: '/' },
-	                            'Getting started'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.NavItem,
-	                            { eventKey: 2, href: '/team' },
-	                            'Team'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.NavItem,
-	                            { eventKey: 3, href: '/about' },
-	                            'About'
-	                        )
 	                    )
 	                )
 	            );
@@ -48209,6 +48208,14 @@
 
 	    return Header;
 	}(_react.Component);
+	/*
+	<Nav pullRight>
+	    <NavItem eventKey={1} href="/">Getting started</NavItem>
+	    <NavItem eventKey={2} href="/team">Team</NavItem>
+	    <NavItem eventKey={3} href="/about">About</NavItem>
+	</Nav>
+	*/
+
 
 	exports.default = Header;
 
@@ -48379,6 +48386,10 @@
 
 	var _Schedule2 = _interopRequireDefault(_Schedule);
 
+	var _List = __webpack_require__(530);
+
+	var _List2 = _interopRequireDefault(_List);
+
 	var _Day = __webpack_require__(528);
 
 	var _Day2 = _interopRequireDefault(_Day);
@@ -48397,10 +48408,33 @@
 	    function Calendar() {
 	        _classCallCheck(this, Calendar);
 
-	        return _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this));
+
+	        _this.state = {
+	            hours: []
+	        };
+	        return _this;
 	    }
 
 	    _createClass(Calendar, [{
+	        key: 'addHour',
+	        value: function addHour(h) {
+	            var hours = this.state.hours;
+	            hours.push(h);
+	            this.setState({
+	                hours: hours
+	            });
+	        }
+	    }, {
+	        key: 'removeHour',
+	        value: function removeHour(h) {
+	            var hours = this.state.hours;
+	            hours.splice(hours.indexOf(h), 1);
+	            this.setState({
+	                hours: hours
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var events = {
@@ -48413,7 +48447,24 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(_Navigation2.default, { state: 'calendar' }),
-	                _react2.default.createElement(_Schedule2.default, { events: events })
+	                _react2.default.createElement(
+	                    _reactBootstrap.Row,
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Col,
+	                        { md: 3 },
+	                        ' ',
+	                        _react2.default.createElement(_List2.default, { hours: this.state.hours }),
+	                        ' '
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Col,
+	                        { md: 9 },
+	                        ' ',
+	                        _react2.default.createElement(_Schedule2.default, { addHour: this.addHour.bind(this), removeHour: this.removeHour.bind(this), events: events }),
+	                        ' '
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -48476,7 +48527,7 @@
 
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'hidden-xs' },
 	                _react2.default.createElement(
 	                    _reactBootstrap.Breadcrumb,
 	                    null,
@@ -48486,11 +48537,11 @@
 	                        _react2.default.createElement(
 	                            _reactBootstrap.Row,
 	                            { className: 'show-grid' },
-	                            _react2.default.createElement(_Step2.default, { active: active.calendar, title: 'Calendar', description: 'Bla bla bla' }),
+	                            _react2.default.createElement(_Step2.default, { link: '/calendar', active: active.calendar, title: 'Calendar', description: 'Bla bla bla' }),
 	                            _react2.default.createElement(_Next2.default, null),
-	                            _react2.default.createElement(_Step2.default, { active: active.map, title: 'Map', description: 'Bla bla bla' }),
+	                            _react2.default.createElement(_Step2.default, { link: '/map', active: active.map, title: 'Map', description: 'Bla bla bla' }),
 	                            _react2.default.createElement(_Next2.default, null),
-	                            _react2.default.createElement(_Step2.default, { active: active.person, title: 'Person', description: 'Bla bla bla' })
+	                            _react2.default.createElement(_Step2.default, { link: '/person', active: active.person, title: 'Person', description: 'Bla bla bla' })
 	                        )
 	                    )
 	                )
@@ -48522,6 +48573,8 @@
 
 	var _reactBootstrap = __webpack_require__(269);
 
+	var _reactRouter = __webpack_require__(199);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48544,18 +48597,40 @@
 	        value: function render() {
 	            var title = void 0;
 	            if (this.props.active) title = _react2.default.createElement(
-	                'h3',
-	                { style: { textAlign: 'center', fontWeight: 'bold' } },
-	                ' ',
-	                this.props.title,
-	                ' '
-	            );else title = _react2.default.createElement(
-	                'h3',
-	                { style: { textAlign: 'center' } },
+	                'div',
+	                null,
 	                _react2.default.createElement(
-	                    'a',
-	                    { href: '#' },
-	                    this.props.title
+	                    'h3',
+	                    { style: { textAlign: 'center', fontWeight: 'bold', color: '#000' } },
+	                    ' ',
+	                    this.props.title,
+	                    ' '
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    { style: { textAlign: 'center', color: '#000' } },
+	                    ' ',
+	                    this.props.description,
+	                    ' '
+	                )
+	            );else title = _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h3',
+	                    { style: { textAlign: 'center' } },
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: '#' },
+	                        this.props.title
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    { style: { textAlign: 'center' } },
+	                    ' ',
+	                    this.props.description,
+	                    ' '
 	                )
 	            );
 
@@ -48563,15 +48638,12 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(
-	                    _reactBootstrap.Col,
-	                    { xs: 3 },
-	                    title,
+	                    _reactRouter.Link,
+	                    { to: this.props.link },
 	                    _react2.default.createElement(
-	                        'p',
-	                        { style: { textAlign: 'center' } },
-	                        ' ',
-	                        this.props.description,
-	                        ' '
+	                        _reactBootstrap.Col,
+	                        { xs: 3 },
+	                        title
 	                    )
 	                )
 	            );
@@ -48695,21 +48767,32 @@
 	            var events = this.props.events;
 
 	            var dates = Object.keys(events);
+	            var j = 0,
+	                cl2 = '';
 	            var header = dates.map(function (day) {
+	                j++;
+	                if (j > 1) cl2 = 'hidden-xs';
+	                var text = day.substring(0, 5);
 	                return _react2.default.createElement(
 	                    _reactBootstrap.Col,
-	                    { key: day, xs: 3 },
-	                    _react2.default.createElement(_reactBootstrap.Panel, { key: day, collapsible: true, defaultExpanded: true, header: day })
+	                    { className: cl2, key: day, xs: 12, md: 3 },
+	                    _react2.default.createElement(_reactBootstrap.Panel, { collapsible: true, defaultExpanded: true, header: text })
 	                );
 	            });
 
 	            var days = [];
+	            var k = 0;
 	            for (var key in events) {
-	                days.push(_react2.default.createElement(_Day2.default, { key: key, date: key, events: events[key] }));
+	                k++;
+	                if (k > 1) {
+	                    days.push(_react2.default.createElement(_Day2.default, { key: key, className: 'hidden-xs', add: this.props.addHour, remove: this.props.removeHour, date: key, events: events[key] }));
+	                } else {
+	                    days.push(_react2.default.createElement(_Day2.default, { key: key, add: this.props.addHour, remove: this.props.removeHour, date: key, events: events[key] }));
+	                }
 	            }
 
 	            return _react2.default.createElement(
-	                'div',
+	                _reactBootstrap.Panel,
 	                null,
 	                _react2.default.createElement(
 	                    'div',
@@ -48719,12 +48802,12 @@
 	                        null,
 	                        _react2.default.createElement(
 	                            _reactBootstrap.Col,
-	                            { xs: 1 },
+	                            { md: 1, xs: 3 },
 	                            _react2.default.createElement(_reactBootstrap.Panel, { collapsible: true, defaultExpanded: true, header: ' \xA0 ' })
 	                        ),
 	                        _react2.default.createElement(
 	                            _reactBootstrap.Col,
-	                            { xs: 11 },
+	                            { md: 11, xs: 9 },
 	                            _react2.default.createElement(
 	                                _reactBootstrap.Row,
 	                                null,
@@ -48738,265 +48821,255 @@
 	                    { className: 'schedule', id: 'schedule' },
 	                    _react2.default.createElement(
 	                        _reactBootstrap.Col,
-	                        { xs: 1 },
+	                        { xs: 3, md: 1 },
 	                        _react2.default.createElement(
 	                            _reactBootstrap.ListGroup,
 	                            { fill: true },
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 1 },
 	                                '00h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 2 },
 	                                '00h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 3 },
 	                                '01h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 4 },
 	                                '01h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 5 },
 	                                '02h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 6 },
 	                                '02h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 7 },
 	                                '03h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 8 },
 	                                '03h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 9 },
 	                                '04h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 10 },
 	                                '04h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 11 },
 	                                '05h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 12 },
 	                                '05h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 13 },
 	                                '06h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 14 },
 	                                '06h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 15 },
 	                                '07h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 16 },
 	                                '07h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 17 },
 	                                '08h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 18 },
 	                                '08h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 19 },
 	                                '09h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 20 },
 	                                '09h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 21 },
 	                                '10h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 22 },
 	                                '10h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 23 },
 	                                '11h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 24 },
 	                                '11h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 25 },
 	                                '12h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
-	                                '11h30'
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.ListGroupItem,
-	                                null,
-	                                '12h00'
-	                            ),
-	                            _react2.default.createElement(
-	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 26 },
 	                                '12h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 27 },
 	                                '13h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 28 },
 	                                '13h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 29 },
 	                                '14h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 30 },
 	                                '14h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 31 },
 	                                '15h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 32 },
 	                                '15h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 33 },
 	                                '16h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 34 },
 	                                '16h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 35 },
 	                                '17h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 36 },
 	                                '17h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 37 },
 	                                '18h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 38 },
 	                                '18h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 39 },
 	                                '19h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 40 },
 	                                '19h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 41 },
 	                                '20h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 42 },
 	                                '20h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 43 },
 	                                '21h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 44 },
 	                                '21h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 45 },
 	                                '22h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 46 },
 	                                '22h30'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 47 },
 	                                '23h00'
 	                            ),
 	                            _react2.default.createElement(
 	                                _reactBootstrap.ListGroupItem,
-	                                null,
+	                                { key: 48 },
 	                                '23h30'
 	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        _reactBootstrap.Col,
-	                        { xs: 11 },
+	                        { xs: 9, md: 11 },
 	                        _react2.default.createElement(
 	                            _reactBootstrap.Row,
 	                            null,
@@ -49031,6 +49104,10 @@
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactBootstrap = __webpack_require__(269);
+
+	var _Event = __webpack_require__(529);
+
+	var _Event2 = _interopRequireDefault(_Event);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49070,37 +49147,27 @@
 	                    if (last < events.length - 1) last++;
 	                }
 	                if (events[last].start === hours[i]) {
-	                    blocks.push(_react2.default.createElement(
-	                        _reactBootstrap.ListGroupItem,
-	                        { className: 'start_event', key: i, href: '#', active: true },
-	                        ' ',
-	                        events[last].acronym,
-	                        ' '
-	                    ));
+	                    blocks.push(_react2.default.createElement(_Event2.default, { add: this.props.add, remove: this.props.remove, date: this.props.date + ' ' + hours[i], first: true, key: i, title: events[last].acronym }));
 	                    last_acronym = events[last].acronym;
 	                }
 
 	                if (last_acronym) {
-	                    blocks.push(_react2.default.createElement(
-	                        _reactBootstrap.ListGroupItem,
-	                        { key: i, href: '#', active: true },
-	                        ' \xA0 '
-	                    ));
+	                    blocks.push(_react2.default.createElement(_Event2.default, { add: this.props.add, remove: this.props.remove, date: this.props.date + ' ' + hours[i], key: i, title: events[last].acronym }));
 	                    last_acronym = events[last].acronym;
-	                } else blocks.push(_react2.default.createElement(
-	                    _reactBootstrap.ListGroupItem,
-	                    { key: i, href: '#' },
-	                    ' \xA0 '
-	                ));
+	                } else blocks.push(_react2.default.createElement(_Event2.default, { add: this.props.add, remove: this.props.remove, date: this.props.date + ' ' + hours[i], key: i }));
 	            }
 
 	            return _react2.default.createElement(
-	                _reactBootstrap.Col,
-	                { xs: 3 },
+	                'div',
+	                null,
 	                _react2.default.createElement(
-	                    _reactBootstrap.ListGroup,
-	                    { fill: true },
-	                    blocks
+	                    _reactBootstrap.Col,
+	                    { xs: 3 },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.ListGroup,
+	                        { fill: true },
+	                        blocks
+	                    )
 	                )
 	            );
 	        }
@@ -49110,6 +49177,1124 @@
 	}(_react.Component);
 
 	exports.default = Schedule;
+
+/***/ },
+/* 529 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(269);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Event = function (_Component) {
+	    _inherits(Event, _Component);
+
+	    function Event(props) {
+	        _classCallCheck(this, Event);
+
+	        var _this = _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).call(this, props));
+
+	        var state = '';
+	        if (_this.props.title) state = 'info';
+	        _this.state = {
+	            state: state
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Event, [{
+	        key: 'handdleClick',
+	        value: function handdleClick(e) {
+	            var _this2 = this;
+
+	            if (this.state.state === 'success') {
+	                this.setState({
+	                    state: 'danger'
+	                });
+	                setTimeout(function () {
+	                    if (_this2.props.title) _this2.setState({ state: 'info' });else _this2.setState({ state: null });
+	                }, 500);
+	                this.props.remove(this.props.date);
+	            } else {
+	                this.setState({
+	                    state: 'success'
+	                });
+	                this.props.add(this.props.date);
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var style = null;
+	            var title = ' ';
+	            if (this.props.title) style = 'event';
+	            if (this.props.first) {
+	                style = 'start_event';
+	                title = this.props.title;
+	            }
+
+	            return _react2.default.createElement(
+	                _reactBootstrap.ListGroupItem,
+	                { bsStyle: this.state.state, onClick: this.handdleClick.bind(this), className: style, href: '#' },
+	                '\xA0',
+	                title
+	            );
+	        }
+	    }]);
+
+	    return Event;
+	}(_react.Component);
+
+	exports.default = Event;
+
+/***/ },
+/* 530 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(269);
+
+	var _reactRouter = __webpack_require__(199);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var List = function (_Component) {
+	    _inherits(List, _Component);
+
+	    function List() {
+	        _classCallCheck(this, List);
+
+	        return _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).apply(this, arguments));
+	    }
+
+	    _createClass(List, [{
+	        key: 'render',
+	        value: function render() {
+	            var hours = this.props.hours.map(function (hour) {
+	                return _react2.default.createElement(
+	                    _reactBootstrap.ListGroupItem,
+	                    { href: '#' },
+	                    hour
+	                );
+	            });
+	            var msg = null;
+	            var confirm = null;
+	            if (hours.length == 0) msg = 'No hours selected on Schedule!';else confirm = _react2.default.createElement(
+	                'div',
+	                { style: { textAlign: 'right' } },
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: 'map' },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Button,
+	                        { bsStyle: 'success' },
+	                        'Confirm rides ',
+	                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'play' }),
+	                        ' '
+	                    )
+	                )
+	            );
+
+	            return _react2.default.createElement(
+	                _reactBootstrap.Panel,
+	                { header: 'Rides list', footer: confirm },
+	                msg,
+	                _react2.default.createElement(
+	                    _reactBootstrap.ListGroup,
+	                    { fill: true },
+	                    hours
+	                )
+	            );
+	        }
+	    }]);
+
+	    return List;
+	}(_react.Component);
+
+	exports.default = List;
+
+/***/ },
+/* 531 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(34);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactBootstrap = __webpack_require__(269);
+
+	var _reactGmaps = __webpack_require__(532);
+
+	var _Navigation = __webpack_require__(524);
+
+	var _Navigation2 = _interopRequireDefault(_Navigation);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Map = function (_Component) {
+	    _inherits(Map, _Component);
+
+	    function Map() {
+	        _classCallCheck(this, Map);
+
+	        var _this = _possibleConstructorReturn(this, (Map.__proto__ || Object.getPrototypeOf(Map)).call(this));
+
+	        _this.state = {
+	            matches: ''
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Map, [{
+	        key: 'onMapCreated',
+	        value: function onMapCreated(map) {
+	            map.setOptions({
+	                disableDefaultUI: true
+	            });
+	        }
+	    }, {
+	        key: 'onDragEnd',
+	        value: function onDragEnd(e) {
+	            console.log('onDragEnd', e);
+	        }
+	    }, {
+	        key: 'onCloseClick',
+	        value: function onCloseClick() {
+	            console.log('onCloseClick');
+	        }
+	    }, {
+	        key: 'onClick',
+	        value: function onClick(e) {
+	            console.log('onClick', e);
+	        }
+	    }, {
+	        key: 'handdleChange',
+	        value: function handdleChange(e) {
+	            this.setState({
+	                matches: ''
+	            });
+	            var matches = _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    _reactBootstrap.ListGroupItem,
+	                    { href: '#' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Jo\xE3o Leite'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'pull-right' },
+	                        '10 km'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.ListGroupItem,
+	                    { href: '#' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Jo\xE3o Leite'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'pull-right' },
+	                        '10 km'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.ListGroupItem,
+	                    { href: '#' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Jo\xE3o Leite'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'pull-right' },
+	                        '10 km'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.ListGroupItem,
+	                    { href: '#' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        'Jo\xE3o Leite'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'pull-right' },
+	                        '10 km'
+	                    )
+	                )
+	            );
+	            this.setState({
+	                matches: matches
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            var rides = _react2.default.createElement(
+	                _reactBootstrap.FormGroup,
+	                { controlId: 'formControlsSelect' },
+	                _react2.default.createElement(
+	                    _reactBootstrap.ControlLabel,
+	                    null,
+	                    'Select ride'
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.FormControl,
+	                    { componentClass: 'select', placeholder: 'select', onChange: this.handdleChange.bind(this) },
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: 'select' },
+	                        '...'
+	                    ),
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '01/10/2016 08:30' },
+	                        '01/10/2016 08:30'
+	                    ),
+	                    _react2.default.createElement(
+	                        'option',
+	                        { value: '02/10/2016 10:00' },
+	                        '02/10/2016 10:00'
+	                    )
+	                )
+	            );
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    _reactGmaps.Gmaps,
+	                    {
+	                        width: '100%',
+	                        height: '100%',
+	                        style: { height: 'calc(100% - 52px)', position: 'absolute', zIndex: 1 },
+	                        lat: 38.7436056,
+	                        lng: -9.2302441,
+	                        zoom: 12,
+	                        loadingMessage: 'Be happy',
+	                        params: { v: '3.exp', key: 'AIzaSyCKeg1HrvU_UC8v81zZdiH8nxGgpUbT7OE' },
+	                        onMapCreated: this.onMapCreated },
+	                    _react2.default.createElement(_reactGmaps.Marker, {
+	                        lat: 38.7046056,
+	                        lng: -9.2302441,
+	                        draggable: false,
+	                        onDragEnd: this.onDragEnd })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { marginTop: '0px', paddingTop: '20px', zIndex: 999, position: 'relative' } },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Grid,
+	                        null,
+	                        _react2.default.createElement(_Navigation2.default, { state: 'map' })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'matches' },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Row,
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Col,
+	                            { md: 12 },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Panel,
+	                                { collapsible: true, defaultExpanded: true, header: rides, bsStyle: 'primary' },
+	                                _react2.default.createElement(_reactBootstrap.ListGroup, { fill: true, children: this.state.matches })
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Map;
+	}(_react.Component);
+
+	exports.default = Map;
+
+/***/ },
+/* 532 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _componentsGmaps = __webpack_require__(533);
+
+	var _componentsGmaps2 = _interopRequireDefault(_componentsGmaps);
+
+	var _componentsMarker = __webpack_require__(541);
+
+	var _componentsMarker2 = _interopRequireDefault(_componentsMarker);
+
+	var _componentsInfoWindow = __webpack_require__(544);
+
+	var _componentsInfoWindow2 = _interopRequireDefault(_componentsInfoWindow);
+
+	var _componentsCircle = __webpack_require__(546);
+
+	var _componentsCircle2 = _interopRequireDefault(_componentsCircle);
+
+	exports.Gmaps = _componentsGmaps2['default'];
+	exports.Marker = _componentsMarker2['default'];
+	exports.InfoWindow = _componentsInfoWindow2['default'];
+	exports.Circle = _componentsCircle2['default'];
+
+/***/ },
+/* 533 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(34);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _objectAssign = __webpack_require__(4);
+
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+
+	var _eventsMap = __webpack_require__(534);
+
+	var _eventsMap2 = _interopRequireDefault(_eventsMap);
+
+	var _mixinsListener = __webpack_require__(535);
+
+	var _mixinsListener2 = _interopRequireDefault(_mixinsListener);
+
+	var _utilsGoogleMaps = __webpack_require__(536);
+
+	var _utilsGoogleMaps2 = _interopRequireDefault(_utilsGoogleMaps);
+
+	var _utilsCompareProps = __webpack_require__(540);
+
+	var _utilsCompareProps2 = _interopRequireDefault(_utilsCompareProps);
+
+	var Gmaps = _react2['default'].createClass({
+	  displayName: 'Gmaps',
+
+	  mixins: [_mixinsListener2['default']],
+
+	  map: null,
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      isMapCreated: false
+	    };
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    this.setState({
+	      callbackIndex: _utilsGoogleMaps2['default'].load(this.props.params, this.mapsCallback)
+	    });
+	  },
+
+	  componentWillUnmount: function componentWillUnmount() {
+	    _utilsGoogleMaps2['default'].removeCallback(this.state.callbackIndex);
+	    this.removeListeners();
+	  },
+
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (this.map && !(0, _utilsCompareProps2['default'])(this.props, nextProps)) {
+	      this.map.setOptions(_extends({}, nextProps, {
+	        center: new google.maps.LatLng(nextProps.lat, nextProps.lng)
+	      }));
+	    }
+	  },
+
+	  getMap: function getMap() {
+	    return this.map;
+	  },
+
+	  mapsCallback: function mapsCallback() {
+	    this.createMap();
+	    this.addListeners(this.map, _eventsMap2['default']);
+	  },
+
+	  createMap: function createMap() {
+	    var node = _reactDom2['default'].findDOMNode(this);
+	    this.map = new google.maps.Map(node, _extends({}, this.props, {
+	      center: new google.maps.LatLng(this.props.lat, this.props.lng)
+	    }));
+	    this.setState({
+	      isMapCreated: true
+	    });
+	    if (this.props.onMapCreated) {
+	      this.props.onMapCreated(this.map);
+	    }
+	  },
+
+	  getChildren: function getChildren() {
+	    var _this = this;
+
+	    return _react2['default'].Children.map(this.props.children, function (child) {
+	      if (!_react2['default'].isValidElement(child)) {
+	        return child;
+	      }
+	      return _react2['default'].cloneElement(child, {
+	        ref: child.ref,
+	        map: _this.map
+	      });
+	    });
+	  },
+
+	  render: function render() {
+	    var style = (0, _objectAssign2['default'])({
+	      width: this.props.width,
+	      height: this.props.height
+	    }, this.props.style);
+	    return _react2['default'].createElement(
+	      'div',
+	      { style: style, className: this.props.className },
+	      this.props.loadingMessage || 'Loading...',
+	      this.state.isMapCreated ? this.getChildren() : null
+	    );
+	  }
+
+	});
+
+	exports['default'] = Gmaps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 534 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = {
+	  onBoundsChanged: 'bounds_changed',
+	  onCenterChanged: 'center_changed',
+	  onClick: 'click',
+	  onDblClick: 'dblclick',
+	  onDrag: 'drag',
+	  onDragEnd: 'dragend',
+	  onDragStart: 'dragstart',
+	  onHeadingChanged: 'heading_changed',
+	  onIdle: 'idle',
+	  onMapTypeIdChanged: 'maptypeid_changed',
+	  onMouseMove: 'mousemove',
+	  onMouseOut: 'mouseout',
+	  onMouseOver: 'mouseover',
+	  onProjectionChanged: 'projection_changed',
+	  onResize: 'resize',
+	  onRightClick: 'rightclick',
+	  onTilesLoaded: 'tilesloaded',
+	  onTiltChanged: 'tilt_changed',
+	  onZoomChanged: 'zoom_changed'
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 535 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var Listener = {
+
+	  addListeners: function addListeners(entity, events) {
+	    for (var prop in this.props) {
+	      if (this.props.hasOwnProperty(prop) && events[prop]) {
+	        var addListener = google.maps.event.addListener;
+	        var listener = addListener(entity, events[prop], this.props[prop]);
+	        if (!this.listeners) {
+	          this.listeners = [];
+	        }
+	        this.listeners.push(listener);
+	      }
+	    }
+	  },
+
+	  removeListeners: function removeListeners() {
+	    if (window.google && this.listeners) {
+	      this.listeners.forEach(function (listener) {
+	        google.maps.event.removeListener(listener);
+	      });
+	    }
+	  }
+
+	};
+
+	exports["default"] = Listener;
+	module.exports = exports["default"];
+
+/***/ },
+/* 536 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _querystring = __webpack_require__(537);
+
+	var _querystring2 = _interopRequireDefault(_querystring);
+
+	exports['default'] = {
+
+	  callbacks: [],
+
+	  appended: false,
+
+	  load: function load(params, callback) {
+	    var index = this.callbacks.push(callback);
+	    if (window.google) {
+	      setTimeout(this.fireCallbacks.bind(this));
+	    } else {
+	      if (!this.appended) {
+	        window.mapsCallback = this.mapsCallback.bind(this);
+	        this.appendScript(params);
+	      }
+	    }
+	    return index;
+	  },
+
+	  getSrc: function getSrc(params) {
+	    var src = 'https://maps.googleapis.com/maps/api/js';
+	    src += '?callback=mapsCallback&';
+	    src += _querystring2['default'].stringify(params);
+	    return src;
+	  },
+
+	  appendScript: function appendScript(params) {
+	    var src = this.getSrc(params);
+	    var script = document.createElement('script');
+	    script.setAttribute('src', src);
+	    document.head.appendChild(script);
+	    this.appended = true;
+	  },
+
+	  mapsCallback: function mapsCallback() {
+	    window.mapsCallback = undefined;
+	    this.fireCallbacks();
+	  },
+
+	  fireCallbacks: function fireCallbacks() {
+	    this.callbacks.forEach(function (callback) {
+	      return callback();
+	    });
+	    this.callbacks = [];
+	  },
+
+	  removeCallback: function removeCallback(index) {
+	    this.callbacks.splice(index - 1, 1);
+	  }
+
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 537 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.decode = exports.parse = __webpack_require__(538);
+	exports.encode = exports.stringify = __webpack_require__(539);
+
+
+/***/ },
+/* 538 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	'use strict';
+
+	// If obj.hasOwnProperty has been overridden, then calling
+	// obj.hasOwnProperty(prop) will break.
+	// See: https://github.com/joyent/node/issues/1707
+	function hasOwnProperty(obj, prop) {
+	  return Object.prototype.hasOwnProperty.call(obj, prop);
+	}
+
+	module.exports = function(qs, sep, eq, options) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  var obj = {};
+
+	  if (typeof qs !== 'string' || qs.length === 0) {
+	    return obj;
+	  }
+
+	  var regexp = /\+/g;
+	  qs = qs.split(sep);
+
+	  var maxKeys = 1000;
+	  if (options && typeof options.maxKeys === 'number') {
+	    maxKeys = options.maxKeys;
+	  }
+
+	  var len = qs.length;
+	  // maxKeys <= 0 means that we should not limit keys count
+	  if (maxKeys > 0 && len > maxKeys) {
+	    len = maxKeys;
+	  }
+
+	  for (var i = 0; i < len; ++i) {
+	    var x = qs[i].replace(regexp, '%20'),
+	        idx = x.indexOf(eq),
+	        kstr, vstr, k, v;
+
+	    if (idx >= 0) {
+	      kstr = x.substr(0, idx);
+	      vstr = x.substr(idx + 1);
+	    } else {
+	      kstr = x;
+	      vstr = '';
+	    }
+
+	    k = decodeURIComponent(kstr);
+	    v = decodeURIComponent(vstr);
+
+	    if (!hasOwnProperty(obj, k)) {
+	      obj[k] = v;
+	    } else if (Array.isArray(obj[k])) {
+	      obj[k].push(v);
+	    } else {
+	      obj[k] = [obj[k], v];
+	    }
+	  }
+
+	  return obj;
+	};
+
+
+/***/ },
+/* 539 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	'use strict';
+
+	var stringifyPrimitive = function(v) {
+	  switch (typeof v) {
+	    case 'string':
+	      return v;
+
+	    case 'boolean':
+	      return v ? 'true' : 'false';
+
+	    case 'number':
+	      return isFinite(v) ? v : '';
+
+	    default:
+	      return '';
+	  }
+	};
+
+	module.exports = function(obj, sep, eq, name) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  if (obj === null) {
+	    obj = undefined;
+	  }
+
+	  if (typeof obj === 'object') {
+	    return Object.keys(obj).map(function(k) {
+	      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+	      if (Array.isArray(obj[k])) {
+	        return obj[k].map(function(v) {
+	          return ks + encodeURIComponent(stringifyPrimitive(v));
+	        }).join(sep);
+	      } else {
+	        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+	      }
+	    }).join(sep);
+
+	  }
+
+	  if (!name) return '';
+	  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+	         encodeURIComponent(stringifyPrimitive(obj));
+	};
+
+
+/***/ },
+/* 540 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	exports['default'] = function (props, nextProps) {
+
+	  var propsKeys = Object.keys(props);
+	  var nextPropsKeys = Object.keys(nextProps);
+	  if (propsKeys.length !== nextPropsKeys.length) {
+	    return false;
+	  }
+
+	  for (var i = 0; i < propsKeys.length; i++) {
+	    var key = propsKeys[i];
+	    if (key !== 'children' && key.indexOf('on') !== 0 && (!nextProps.hasOwnProperty(key) || props[key] !== nextProps[key])) {
+	      return false;
+	    }
+	  }
+
+	  return true;
+	};
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 541 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _entity = __webpack_require__(542);
+
+	var _entity2 = _interopRequireDefault(_entity);
+
+	var _eventsMarker = __webpack_require__(543);
+
+	var _eventsMarker2 = _interopRequireDefault(_eventsMarker);
+
+	exports['default'] = (0, _entity2['default'])('Marker', 'position', _eventsMarker2['default']);
+	module.exports = exports['default'];
+
+/***/ },
+/* 542 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _mixinsListener = __webpack_require__(535);
+
+	var _mixinsListener2 = _interopRequireDefault(_mixinsListener);
+
+	var _utilsCompareProps = __webpack_require__(540);
+
+	var _utilsCompareProps2 = _interopRequireDefault(_utilsCompareProps);
+
+	exports['default'] = function (name, latLngProp, events) {
+	  return _react2['default'].createClass({
+
+	    mixins: [_mixinsListener2['default']],
+
+	    entity: null,
+
+	    componentDidMount: function componentDidMount() {
+	      var options = this.getOptions(this.props);
+	      this.entity = new google.maps[name](options);
+	      this.addListeners(this.entity, events);
+	    },
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	      if (!(0, _utilsCompareProps2['default'])(this.props, nextProps)) {
+	        var options = this.getOptions(nextProps);
+	        this.entity.setOptions(options);
+	      }
+	    },
+
+	    componentWillUnmount: function componentWillUnmount() {
+	      this.entity.setMap(null);
+	      this.removeListeners();
+	      this.entity = null;
+	    },
+
+	    getEntity: function getEntity() {
+	      return this.entity;
+	    },
+
+	    getOptions: function getOptions(props) {
+	      return _extends({}, props, _defineProperty({}, latLngProp, new google.maps.LatLng(props.lat, props.lng)));
+	    },
+
+	    render: function render() {
+	      return null;
+	    }
+
+	  });
+	};
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 543 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = {
+	  onAnimationChanged: 'animation_changed',
+	  onClick: 'click',
+	  onClickableChanged: 'clickable_changed',
+	  onCursorChanged: 'cursor_changed',
+	  onDblClick: 'dblclick',
+	  onDrag: 'drag',
+	  onDragEnd: 'dragend',
+	  onDraggableChanged: 'draggable_changed',
+	  onDragStart: 'dragstart',
+	  onFlatChanged: 'flat_changed',
+	  onIconChanged: 'icon_changed',
+	  onMouseDown: 'mousedown',
+	  onMouseOut: 'mouseout',
+	  onMouseOver: 'mouseover',
+	  onMouseUp: 'mouseup',
+	  onPositionChanged: 'position_changed',
+	  onRightClick: 'rightclick',
+	  onShapeChanged: 'shape_changed',
+	  onTitleChanged: 'title_changed',
+	  onVisibleChanged: 'visible_changed',
+	  onZindexChanged: 'zindex_changed'
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 544 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _entity = __webpack_require__(542);
+
+	var _entity2 = _interopRequireDefault(_entity);
+
+	var _eventsInfoWindow = __webpack_require__(545);
+
+	var _eventsInfoWindow2 = _interopRequireDefault(_eventsInfoWindow);
+
+	exports['default'] = (0, _entity2['default'])('InfoWindow', 'position', _eventsInfoWindow2['default']);
+	module.exports = exports['default'];
+
+/***/ },
+/* 545 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = {
+	  onCloseClick: 'closeclick',
+	  onContentChanged: 'content_changed',
+	  onDOMReady: 'domready',
+	  onPositionChanged: 'position_changed',
+	  onZindexChanged: 'zindex_changed'
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 546 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _entity = __webpack_require__(542);
+
+	var _entity2 = _interopRequireDefault(_entity);
+
+	var _eventsCircle = __webpack_require__(547);
+
+	var _eventsCircle2 = _interopRequireDefault(_eventsCircle);
+
+	exports['default'] = (0, _entity2['default'])('Circle', 'center', _eventsCircle2['default']);
+	module.exports = exports['default'];
+
+/***/ },
+/* 547 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = {
+	  onCenterChanged: 'center_changed',
+	  onClick: 'click',
+	  onDblClick: 'dblclick',
+	  onDrag: 'drag',
+	  onDragEnd: 'dragend',
+	  onDragStart: 'dragstart',
+	  onMouseDown: 'mousedown',
+	  onMouseMove: 'mousemove',
+	  onMouseOut: 'mouseout',
+	  onMouseOver: 'mouseover',
+	  onMouseUp: 'mouseup',
+	  onRadiusChanged: 'radius_changed',
+	  onRightClick: 'rightclick'
+	};
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);
