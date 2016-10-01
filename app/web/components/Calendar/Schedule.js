@@ -19,7 +19,7 @@ export default class Schedule extends Component {
             j++
             if(j>1)
                 cl2 = 'hidden-xs'
-            let text = day.substring(0,5)
+            let text = day.substring(0,10)
             return <Col class={cl2} key={day} xs={12} md={3}><Panel collapsible defaultExpanded header={text}></Panel></Col>
         })
 
@@ -38,7 +38,7 @@ export default class Schedule extends Component {
             <div class="schedule-header">
             <Row>
                 <Col md={1} xs={3}>
-                    <Panel collapsible defaultExpanded header=" &nbsp; "></Panel>
+                    <Panel style={{opacity:0}} collapsible defaultExpanded header=" &nbsp; "></Panel>
                 </Col>
                 <Col md={11} xs={9}>
                     <Row>{header}</Row>

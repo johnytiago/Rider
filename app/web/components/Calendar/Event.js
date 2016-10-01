@@ -26,15 +26,13 @@ export default class Event extends Component {
 
             },500)
             this.props.remove(this.props.date)
-        }
-        else {
+        }else{
             this.setState({
                 state : 'success'
             })
             this.props.add(this.props.date)
         }
     }
-
 
     render(){
         let style = null

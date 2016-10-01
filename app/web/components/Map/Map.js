@@ -1,11 +1,17 @@
 
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux'
 import { Row, Panel, Col, Grid, ListGroup, ListGroupItem, FormGroup,ControlLabel,FormControl } from 'react-bootstrap'
 import {Gmaps, Marker, InfoWindow, Circle} from 'react-gmaps';
 
 import Navigation from '../Navigation/Navigation'
 
+@connect((store)=>{
+    return {
+        tmp : store.rides.tmp,
+    }
+})
 export default class Map extends Component {
 
     constructor(){
@@ -62,12 +68,12 @@ export default class Map extends Component {
 
   render() {
 
-      let rides =  <FormGroup controlId="formControlsSelect">
+      let rides = this.props.tmp.map(d => <option value={{d}}>{d}</option>)
+      let ridesHTML =  <FormGroup controlId="formControlsSelect">
       <ControlLabel>Select ride</ControlLabel>
-      <FormControl componentClass="select" placeholder="select" onChange={this.handdleChange.bind(this)}>
-        <option value="select">...</option>
-        <option value="01/10/2016 08:30">01/10/2016 08:30</option>
-        <option value="02/10/2016 10:00">02/10/2016 10:00</option>
+      <FormControl componentClass="select" onChange={this.handdleChange.bind(this)}>
+            <option value='...'>(select hour)</option>
+            {rides}
       </FormControl>
     </FormGroup>
 
@@ -99,7 +105,7 @@ export default class Map extends Component {
         <div class='matches'>
         <Row>
         <Col md={12}>
-        <Panel collapsible defaultExpanded header={rides} bsStyle="primary">
+        <Panel collapsible defaultExpanded header={ridesHTML} bsStyle="primary">
         <ListGroup fill children={this.state.matches}></ListGroup>
         </Panel>
         </Col>

@@ -22,22 +22,21 @@ export default class Schedule extends Component {
         let events = this.props.events
         let blocks = []
         for(let i=0; i<hours.length; i++){
-            if(events[last].end === hours[i]){
+            if(events[last].end.substring(11,16) === hours[i]){
                 last_acronym = null
                 if(last<events.length-1)
                     last++
             }
-            if(events[last].start === hours[i]){
-                blocks.push(<Event add={this.props.add} remove={this.props.remove} date={this.props.date+' '+hours[i]} first={true} key={i} title={events[last].acronym} />)
+            if(events[last].start.substring(11,16) === hours[i]){
+                blocks.push(<Event add={this.props.add} remove={this.props.remove} date={events[last].start} first={true} key={i} title={events[last].acronym} />)
                 last_acronym = events[last].acronym
             }
-
             if(last_acronym){
-                blocks.push(<Event add={this.props.add} remove={this.props.remove} date={this.props.date+' '+hours[i]} key={i} title={events[last].acronym} />)
+                blocks.push(<Event add={this.props.add} remove={this.props.remove} date={events[last].start} key={i} title={events[last].acronym} />)
                 last_acronym = events[last].acronym
             }
             else
-                blocks.push(<Event add={this.props.add} remove={this.props.remove} date={this.props.date+' '+hours[i]} key={i} />)
+                blocks.push(<Event add={this.props.add} remove={this.props.remove} date={events[last].start.substring(0,10)+' '+hours[i]} key={i} />)
         }
 
         return <div>
