@@ -8,7 +8,7 @@ const bower = require('gulp-bower')
 
 const dist = "server/public/"
 
-gulp.task('default', ['bower', 'web', 'css', 'icons', 'assets'])
+gulp.task('default', ['bower', 'web', 'css', 'icons', 'assets', 'app'])
 
 gulp.task('app', ()=>{
     gulp.src('app/web/main.js')
