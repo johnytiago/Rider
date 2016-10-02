@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { socket } from './socket'
+
 
 export function fetchRides(person, date){
     dispatch({type: "FETCH_RIDES"})
@@ -46,3 +48,13 @@ export function getRide(id){
             })
     }
 }
+
+//export function request_ride( socket, driver, startpoint, endpoint, time ){
+  //return (dispatch) => {
+    //socket.emit('request_ride', {driver, startpoint, endpoin, time} , (err) => {
+      //if ( err )
+        //return dispatch({ type: "SOCKET_RIDE_REQUEST_ERROR", payload: err })
+      //return dispatch({type: "SOCKET_RIDE_REQUEST"}, payload: to)
+    //})
+  //}
+//}

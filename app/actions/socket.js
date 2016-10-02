@@ -25,6 +25,18 @@ export function connect_socket(tecnicoID){
       return dispatch({ type: "SOCKET_PHONE_REQUEST_FULFILLED", payload })
     })
 
+    socket.on('ride_request', (payload) => {
+      return dispatch({ type: "SOCKET_RIDE_REQUEST", payload })
+    })
+
+    socket.on('ride_confirmed', (payload) => {
+      return dispatch({ type: "SOCKET_RIDE_REQUEST_FULFILLED", payload })
+    })
+
+    socket.on('ride_rejected', (payload) => {
+      return dispatch({ type: "SOCKET_RIDE_REQUEST_REJECTED", payload })
+    })
+
     socket.on('reconnect_failed', 'error', (err) => {
       dispatch({ type: "SOCKET_CONNECT_USER_REJECTED", payload: err })
     })
