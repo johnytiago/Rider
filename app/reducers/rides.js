@@ -1,6 +1,10 @@
 export default function reducer(state={
     rides : {},
-    tmp : [],
+    tmp : {
+        rides: [],
+        from: 'Home',
+        to: 'Tagus'
+    },
     fetching : false,
     fetched : false,
     error: null
@@ -18,13 +22,23 @@ export default function reducer(state={
             error: null
         }
     }
-    return state
+
+    if(action.type === "SET_TMP_RIDE_LOCATION"){
+        let tmpRides = state.tmp.rides.concat([])
+        return {...state, tmp:{rider: tmpRides,from: action.payload.f, to: action.payload.t}}
+    }
 
     if(action.type === "ADD_TMP_RIDE"){
-        let tmp = state.tmp.concat(action.payload)
+        let rides = state.tmp.rides.concat([action.payload])
+        let f = state.tmp.from
+        let t = state.tmp.to
         return {
             ...state,
-            tmp: tmp
+            tmp: {
+                from: f,
+                to: t,
+                rides
+            }
         }
     }
     return state

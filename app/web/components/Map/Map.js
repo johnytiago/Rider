@@ -10,7 +10,7 @@ import Navigation from '../Navigation/Navigation'
 
 @connect((store)=>{
     return {
-        tmp : store.rides.tmp,
+        tmp : store.rides.tmp.rides,
     }
 })
 export default class Map extends Component {
