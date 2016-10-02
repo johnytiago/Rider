@@ -78,6 +78,10 @@
 
 	var _Map2 = _interopRequireDefault(_Map);
 
+	var _Person = __webpack_require__(574);
+
+	var _Person2 = _interopRequireDefault(_Person);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var app = document.getElementById('app');
@@ -93,7 +97,8 @@
 	            { path: '/', component: _App2.default },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _Intro2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/calendar', component: _Calendar2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/map', component: _Map2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/map', component: _Map2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/person', component: _Person2.default })
 	        )
 	    )
 	), app);
@@ -48288,7 +48293,7 @@
 	                                _react2.default.createElement(
 	                                    'b',
 	                                    null,
-	                                    'Rider'
+	                                    'IST Rider'
 	                                )
 	                            )
 	                        )
@@ -51011,6 +51016,8 @@
 
 	var _reactGmaps = __webpack_require__(558);
 
+	var _reactRouter = __webpack_require__(199);
+
 	var _Navigation = __webpack_require__(550);
 
 	var _Navigation2 = _interopRequireDefault(_Navigation);
@@ -51036,7 +51043,8 @@
 	        var _this = _possibleConstructorReturn(this, (Map.__proto__ || Object.getPrototypeOf(Map)).call(this));
 
 	        _this.state = {
-	            matches: ''
+	            matches: '',
+	            marks: []
 	        };
 	        return _this;
 	    }
@@ -51067,23 +51075,28 @@
 	        key: 'handdleChange',
 	        value: function handdleChange(e) {
 	            this.setState({
-	                matches: ''
+	                matches: '',
+	                marks: []
 	            });
 	            var matches = _react2.default.createElement(
 	                'div',
 	                null,
 	                _react2.default.createElement(
-	                    _reactBootstrap.ListGroupItem,
-	                    { href: '#' },
+	                    _reactRouter.Link,
+	                    { to: 'person' },
 	                    _react2.default.createElement(
-	                        'b',
-	                        null,
-	                        'Jo\xE3o Leite'
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: 'pull-right' },
-	                        '10 km'
+	                        _reactBootstrap.ListGroupItem,
+	                        { href: '#' },
+	                        _react2.default.createElement(
+	                            'b',
+	                            null,
+	                            'Jo\xE3o Leite'
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'pull-right' },
+	                            '6 km'
+	                        )
 	                    )
 	                ),
 	                _react2.default.createElement(
@@ -51092,12 +51105,12 @@
 	                    _react2.default.createElement(
 	                        'b',
 	                        null,
-	                        'Jo\xE3o Leite'
+	                        'Ant\xF3nio Freire'
 	                    ),
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: 'pull-right' },
-	                        '10 km'
+	                        '11 km'
 	                    )
 	                ),
 	                _react2.default.createElement(
@@ -51106,12 +51119,12 @@
 	                    _react2.default.createElement(
 	                        'b',
 	                        null,
-	                        'Jo\xE3o Leite'
+	                        'Jo\xE3o Tom\xE1zio'
 	                    ),
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: 'pull-right' },
-	                        '10 km'
+	                        '20 km'
 	                    )
 	                ),
 	                _react2.default.createElement(
@@ -51120,17 +51133,18 @@
 	                    _react2.default.createElement(
 	                        'b',
 	                        null,
-	                        'Jo\xE3o Leite'
+	                        'Jo\xE3o Tiago'
 	                    ),
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: 'pull-right' },
-	                        '10 km'
+	                        '22 km'
 	                    )
 	                )
 	            );
 	            this.setState({
-	                matches: matches
+	                matches: matches,
+	                marks: [{ lat: 38.7594863, lng: -9.2665753 }, { lat: 38.7194863, lng: -9.2965753 }, { lat: 38.7594863, lng: -9.2165753 }, { lat: 38.6594863, lng: -9.1565753 }]
 	            });
 	        }
 	    }, {
@@ -51164,6 +51178,9 @@
 	                )
 	            );
 
+	            var marks = this.state.marks.map(function (m) {
+	                return _react2.default.createElement(_reactGmaps.Marker, { lat: m.lat, lng: m.lng });
+	            });
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -51179,11 +51196,13 @@
 	                        loadingMessage: 'Be happy',
 	                        params: { v: '3.exp', key: 'AIzaSyCKeg1HrvU_UC8v81zZdiH8nxGgpUbT7OE' },
 	                        onMapCreated: this.onMapCreated },
-	                    _react2.default.createElement(_reactGmaps.Marker, {
-	                        lat: 38.7046056,
-	                        lng: -9.2302441,
-	                        draggable: false,
-	                        onDragEnd: this.onDragEnd })
+	                    _react2.default.createElement(_reactGmaps.InfoWindow, {
+	                        lat: 38.7436056,
+	                        lng: -9.2502441,
+	                        content: 'You are here!',
+	                        onCloseClick: this.onCloseClick }),
+	                    _react2.default.createElement(_reactGmaps.Marker, { lat: 38.7336056, lng: -9.2502441 }),
+	                    marks
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -51932,6 +51951,206 @@
 	  onRightClick: 'rightclick'
 	};
 	module.exports = exports['default'];
+
+/***/ },
+/* 574 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(34);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRedux = __webpack_require__(172);
+
+	var _reactBootstrap = __webpack_require__(271);
+
+	var _reactGmaps = __webpack_require__(558);
+
+	var _Navigation = __webpack_require__(550);
+
+	var _Navigation2 = _interopRequireDefault(_Navigation);
+
+	var _List = __webpack_require__(556);
+
+	var _List2 = _interopRequireDefault(_List);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Person = (_dec = (0, _reactRedux.connect)(function (store) {
+	    return {
+	        calendar: store.calendar.calendar,
+	        tmp: store.rides.tmp,
+	        error: store.calendar.error
+	    };
+	}), _dec(_class = function (_Component) {
+	    _inherits(Person, _Component);
+
+	    function Person() {
+	        _classCallCheck(this, Person);
+
+	        var _this = _possibleConstructorReturn(this, (Person.__proto__ || Object.getPrototypeOf(Person)).call(this));
+
+	        _this.state = {
+	            hours: []
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Person, [{
+	        key: 'render',
+	        value: function render() {
+	            this.state.hours = this.props.tmp;
+	            var footer = _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    _reactBootstrap.Button,
+	                    { bsStyle: 'primary' },
+	                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'phone' }),
+	                    ' Ask for phone number'
+	                ),
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: 'pull-right' },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Button,
+	                        { bsStyle: 'success' },
+	                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'ok' }),
+	                        ' Confirm ride'
+	                    )
+	                )
+	            );
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_Navigation2.default, { state: 'person' }),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Row,
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Col,
+	                        { md: 6 },
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Panel,
+	                            { header: 'Ride review', footer: footer },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.ListGroup,
+	                                { fill: true },
+	                                _react2.default.createElement(
+	                                    _reactBootstrap.ListGroupItem,
+	                                    { style: { height: '90px', paddingTop: '30px' } },
+	                                    _react2.default.createElement(
+	                                        'b',
+	                                        { style: { fontSize: '20px' } },
+	                                        '2016-10-01 11:00'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        { style: { paddingTop: '6px' }, className: 'pull-right' },
+	                                        '(Home to Alameda)'
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Panel,
+	                            { header: 'Person' },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Row,
+	                                null,
+	                                _react2.default.createElement(
+	                                    _reactBootstrap.Col,
+	                                    { xs: 4 },
+	                                    _react2.default.createElement(_reactBootstrap.Image, { width: '100%', src: 'http://heartlandpreciousmetals.com/wp-content/uploads/2014/06/person-placeholder.jpg?33da63', circle: true })
+	                                ),
+	                                _react2.default.createElement(
+	                                    _reactBootstrap.Col,
+	                                    { xs: 8 },
+	                                    _react2.default.createElement(
+	                                        'h2',
+	                                        { style: { marginTop: '4px' } },
+	                                        'Jo\xE3o Leite'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        null,
+	                                        'ist177907'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        null,
+	                                        'It is driver'
+	                                    )
+	                                ),
+	                                _react2.default.createElement('br', null),
+	                                _react2.default.createElement(
+	                                    _reactBootstrap.Col,
+	                                    { md: 12 },
+	                                    _react2.default.createElement(
+	                                        _reactGmaps.Gmaps,
+	                                        {
+	                                            width: '100%',
+	                                            height: '100%',
+	                                            style: { height: '400px' },
+	                                            lat: 38.7436056,
+	                                            lng: -9.2302441,
+	                                            zoom: 12,
+	                                            loadingMessage: 'Be happy',
+	                                            params: { v: '3.exp', key: 'AIzaSyCKeg1HrvU_UC8v81zZdiH8nxGgpUbT7OE' },
+	                                            onMapCreated: this.onMapCreated },
+	                                        _react2.default.createElement(_reactGmaps.InfoWindow, {
+	                                            lat: 38.7436056,
+	                                            lng: -9.2502441,
+	                                            content: 'Person location',
+	                                            onCloseClick: this.onCloseClick }),
+	                                        _react2.default.createElement(_reactGmaps.Marker, { lat: 38.7336056, lng: -9.2502441 })
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        ' ',
+	                        _react2.default.createElement('br', null)
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Col,
+	                        { md: 6 },
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Panel,
+	                            { header: 'Chat' },
+	                            '...'
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Person;
+	}(_react.Component)) || _class);
+	exports.default = Person;
 
 /***/ }
 /******/ ]);
