@@ -16,8 +16,7 @@ import Header from './Header'
 export default class App extends Component{
 
   componentDidMount = () => {
-    this.props.dispatch(fetchUser()).then(
-      this.props.dispatch(connect_socket(this.props.tecnicoID)))
+    this.props.dispatch(fetchUser())
   }
 
   render() {
