@@ -47,6 +47,7 @@ export function send_message(socket, from, to, message){
   return (dispatch) => {
     dispatch({type: "SOCKET_SEND_MESSAGE"})
     
+	console.log(from, to, message)
     let msg = { from, to: to , msg: message, when: Date.now() }
 
     socket.emit('send_message', msg , (err) => {

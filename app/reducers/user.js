@@ -19,7 +19,7 @@ export default function reducer(state={
     return {
       ...state,
       user: {
-        tecnicoID : action.payload.username,
+        tecnicoID : Number(action.payload.username),
         username : action.payload.name,
         campus : action.payload.campus,
       },

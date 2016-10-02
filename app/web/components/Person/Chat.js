@@ -1,14 +1,15 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux'
-import { Grid, Panel, Col, Well, Row } from 'react-bootstrap'
+import { Grid, Panel, Col, Well, Row , Button} from 'react-bootstrap'
 
 import { send_message } from '../../../actions/socket'
 
 @connect((store)=>{
     return {
         msgs: store.user.msgs,
-        socket: store.user.socket
+        socket: store.user.socket,
+	tecnicoID : store.user.user.tecnicoID,
     }
 })
 export default class Chat extends Component {
@@ -16,7 +17,12 @@ export default class Chat extends Component {
   constructor() {
     super()
     this.state = {
-      form: 78059
+      to: 78058,
+      msg: "",
+      msgs: [
+{from: 78058,
+ to: 77969,
+ msg: "Hello there"}]
     }
   }
 
@@ -25,14 +31,18 @@ export default class Chat extends Component {
 
   handleSummit = event => {
     event.preventDefault()
-    this.props.dispatch(send_message(this.props.socket, this.state.from, this.props.route.driverID, "Hello from the other side"))
+    if ( event.keyCode === 14 && this.state.msg ) {
+	    this.props.dispatch(send_message(this.props.socket, this.props.tecnicoID, Number(this.state.to), this.state.msg))
+	    this.setState({ msgs: [{ from: this.props.tecnicoID, to: Number(this.state.to), msg: this.state.msg }, ...this.state.msgs ]})
+    }
+    event.target.value = ""
   } 
 
-  handleChangeI = event => {
-    this.setState({from: event.target.value});
+  handleChangeMsg = event => {
+    this.setState({msg: event.target.value});
   }
 
-  handleChangeII = event => {
+  handleChangeTo = event => {
     this.setState({to: event.target.value});
   }
 
@@ -48,33 +58,20 @@ export default class Chat extends Component {
   //}
 
   render() {
-    //const messages = 
-      //let m = this.props.msgs[this.props.driverID]
-      //if (m) {
-        //m.map((message, index) => {
-          //return <li key={index}><b>{message.from}:</b>{message.body}</li>
-        //})
-      //} 
+    const messages = this.state.msgs.map((message, index) => { return <Well bsSize="small" key={index} className="msgField" ><b>{message.from}: </b>{message.msg}</Well> })  
 
     return (
       <Col md={6}>
         <Panel header={'Chat'}>
-          <Well>
-          {{messages}}
-          </Well>
-          <Well>
-            FROM:<input type="text" 
-              value={this.state.from}
-              onChange={this.handleChangeI.bind(this)}
+          <Well bsSize="small">
+            <input type="text" 
+	      placeholder="Enter the message..."
+              value={this.state.msg}
+              onChange={this.handleChangeMsg.bind(this)}
+	      onKeyUp={this.handleSummit.bind(this)}
             />
-            TO:<input type="text" 
-              value={this.state.to}
-              onChange={this.handleChangeII.bind(this)}
-            />
-            <button onClick={this.handleSummit.bind(this)}>
-              Send message
-            </button>
           </Well>
+	  {messages}
         </Panel>
       </Col>
     )
