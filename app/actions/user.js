@@ -3,7 +3,7 @@ import axios from 'axios'
 export function fetchUser(){
   return (dispatch)=>{
     dispatch({type: "FETCH_USER"})
-    axios.get('http://rider.n1z.pt/api/users/me')
+    axios.get('/api/users/me')
     .then((response)=>{
       dispatch({type: "FETCH_USER_FULFILLED", payload: response.data})
     })
