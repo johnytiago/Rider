@@ -30,7 +30,6 @@ export default class App extends Component{
       </div>
       }else{
         return <div>
-          <h1>this.props.tecnicoID</h1>
           <Header />
           <Grid>{this.props.children}</Grid>
         </div>

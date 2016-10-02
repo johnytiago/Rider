@@ -2,6 +2,13 @@
 import React, {Component} from 'react'
 import { Navbar, NavItem, Nav } from 'react-bootstrap';
 
+import { connect } from 'react-redux'
+
+@connect((store)=>{
+  return {
+    tecnicoID : store.user.user.tecnicoID,
+  }
+})
 export default class Header extends Component {
     render() {
         return <div>
@@ -11,6 +18,9 @@ export default class Header extends Component {
                         <a href="/"><b>IST Rider</b></a>
                     </Navbar.Brand>
                 </Navbar.Header>
+		<Nav pullRight>
+			<NavItem eventKey={1} href="">Hello, {this.props.tecnicoID || "New user"}</NavItem>
+		</Nav>
             </Navbar>
         </div>
     }
