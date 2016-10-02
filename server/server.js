@@ -12,7 +12,7 @@ require("./config/express")( server, passport )
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/rider')
 
-routes(server)
+routes(server,passport)
 var port = process.env.PORT || 8080
 server.listen( port ,()=>{
   console.log('Server running at http://localhost:' +  port )

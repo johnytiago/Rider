@@ -1,4 +1,3 @@
-const passport = require("passport")
 const users =require('../controllers/users')
 const calendar =require('../controllers/calendar')
 const ride =require('../controllers/ride')
@@ -9,7 +8,7 @@ function isLoggedIn(req,res,next){
 	res.redirect('/');
 }
 
-module.exports = (server) => {
+module.exports = (server, passport) => {
 
     // API
     server.get('/auth/fenix', passport.authenticate('oauth2'))
