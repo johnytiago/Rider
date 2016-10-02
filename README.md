@@ -41,6 +41,10 @@ cd rider
 ```
 npm install
 ```
+* Gulp
+```
+gulp
+```
 
 #### Start project
 ````
