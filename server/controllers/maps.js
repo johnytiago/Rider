@@ -3,7 +3,7 @@ const Rides = require("../models/ride");
 const Maps = require("../services/maps");
 var collection = require('lodash/collection');
 
-module.exports.addRide = function(username, start, end, date_in, callback){
+module.exports.getRef = function(username, start, end, date_in, callback){
 
 	var matches = [];
 	var len;
