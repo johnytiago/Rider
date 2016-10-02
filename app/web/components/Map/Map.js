@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux'
 import { Row, Panel, Col, Grid, ListGroup, ListGroupItem, FormGroup,ControlLabel,FormControl } from 'react-bootstrap'
 import {Gmaps, Marker, InfoWindow, Circle} from 'react-gmaps';
+import { Link } from 'react-router'
 
 import Navigation from '../Navigation/Navigation'
 
@@ -17,7 +18,8 @@ export default class Map extends Component {
     constructor(){
         super()
         this.state = {
-            matches : ''
+            matches : '',
+            marks : []
         }
     }
 
@@ -41,28 +43,35 @@ export default class Map extends Component {
 
     handdleChange(e){
         this.setState({
-            matches : ''
+            matches : '',
+            marks : []
         })
         let matches =   <div>
-            <ListGroupItem href="#">
+            <Link to='person'><ListGroupItem href="#">
                 <b>João Leite</b>
-                <span class='pull-right'>10 km</span>
+                <span class='pull-right'>6 km</span>
+            </ListGroupItem></Link>
+            <ListGroupItem href="#">
+                <b>António Freire</b>
+                <span class='pull-right'>11 km</span>
             </ListGroupItem>
             <ListGroupItem href="#">
-                <b>João Leite</b>
-                <span class='pull-right'>10 km</span>
+                <b>João Tomázio</b>
+                <span class='pull-right'>20 km</span>
             </ListGroupItem>
             <ListGroupItem href="#">
-                <b>João Leite</b>
-                <span class='pull-right'>10 km</span>
-            </ListGroupItem>
-            <ListGroupItem href="#">
-                <b>João Leite</b>
-                <span class='pull-right'>10 km</span>
+                <b>João Tiago</b>
+                <span class='pull-right'>22 km</span>
             </ListGroupItem>
         </div>
         this.setState({
-            matches : matches
+            matches : matches,
+            marks: [
+                {lat:38.7594863, lng:-9.2665753},
+                {lat:38.7194863, lng:-9.2965753},
+                {lat:38.7594863, lng:-9.2165753},
+                {lat:38.6594863, lng:-9.1565753}
+            ]
         })
   }
 
@@ -77,6 +86,7 @@ export default class Map extends Component {
       </FormControl>
     </FormGroup>
 
+    let marks = this.state.marks.map(m => <Marker lat={m.lat} lng={m.lng} />)
     return <div>
 
         <Gmaps
@@ -90,11 +100,14 @@ export default class Map extends Component {
             params={{v: '3.exp', key: 'AIzaSyCKeg1HrvU_UC8v81zZdiH8nxGgpUbT7OE'}}
             onMapCreated={this.onMapCreated}>
 
-            <Marker
-              lat={38.7046056}
-              lng={-9.2302441}
-              draggable={false}
-              onDragEnd={this.onDragEnd} />
+            <InfoWindow
+                lat={38.7436056}
+                lng={-9.2502441}
+                content={'You are here!'}
+                onCloseClick={this.onCloseClick} />
+            <Marker lat={38.7336056} lng={-9.2502441} />
+
+                {marks}
 
         </Gmaps>
         <div style={{marginTop:'0px',paddingTop:'20px',zIndex:999,position:'relative'}}>

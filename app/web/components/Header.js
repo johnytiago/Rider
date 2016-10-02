@@ -8,7 +8,7 @@ export default class Header extends Component {
             <Navbar>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="/"><b>Rider</b></a>
+                        <a href="/"><b>IST Rider</b></a>
                     </Navbar.Brand>
                 </Navbar.Header>
             </Navbar>

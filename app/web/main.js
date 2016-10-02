@@ -9,6 +9,7 @@ import App from './components/App'
 import Intro from './components/Intro/Intro'
 import Calendar from './components/Calendar/Calendar'
 import Map from './components/Map/Map'
+import Person from './components/Person/Person'
 
 const app = document.getElementById('app')
 
@@ -19,6 +20,7 @@ ReactDOM.render(
                 <IndexRoute component={Intro}/>
                 <Route path="/calendar" component={Calendar} />
                 <Route path="/map" component={Map} />
+                <Route path="/person" component={Person} />
             </Route>
         </Router>
     </Provider>
