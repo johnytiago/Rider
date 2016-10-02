@@ -2,6 +2,7 @@ export default function reducer(state={
   user : {
     tecnicoID: null,
     username: null,
+    campus: null
   },
   msgs: { },
   phones: { },
@@ -18,8 +19,9 @@ export default function reducer(state={
     return {
       ...state,
       user: {
-        tecnicoID : action.payload.tecnicoID,
-        username : action.payload.username
+        tecnicoID : action.payload.username,
+        username : action.payload.name,
+        campus : action.payload.campus,
       },
       fetching: false,
       fetched: true,

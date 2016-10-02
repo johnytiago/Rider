@@ -47,7 +47,7 @@ export default class Map extends Component {
             marks : []
         })
         let matches =   <div>
-            <Link to='person'><ListGroupItem href="#">
+            <Link to='person' driverID={78058}><ListGroupItem href="#">
                 <b>João Leite</b>
                 <span class='pull-right'>6 km</span>
             </ListGroupItem></Link>

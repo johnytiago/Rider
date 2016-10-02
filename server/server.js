@@ -3,10 +3,12 @@ const express = require('express')
 const server = require('express')();
 const http = require('http').Server(server)
 const io = require('socket.io')(http);
+
 const passport = require("passport")
 const mongoose = require("mongoose")
 
 const routes = require('./routes/routes')
+const sendMail = require('./controllers/mailSender')
 
 var users = {}
 
@@ -84,6 +86,7 @@ io.on('connection', socket => {
     console.log( "Phone request\n", "From:", from, "To:", to)
     //guardar estado da ride na db
     //enviar mail
+    sendMail(to, "RIDER - Phone Exchange Request", "The user "+from+" just asked you for your phone number")
     return cb(null)
   })
 
@@ -120,6 +123,6 @@ mongoose.connect('mongodb://localhost:27017/rider')
 
 routes(server,passport)
 var port = process.env.PORT || 8080
-server.listen( port ,()=>{
+http.listen( port ,()=>{
   console.log('Server running at http://localhost:' +  port )
 })

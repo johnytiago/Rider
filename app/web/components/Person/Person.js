@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux'
@@ -7,7 +6,9 @@ import { Row, Image, Panel, Button, Col, Glyphicon, Grid,ListGroup,ListGroupItem
 import {Gmaps, Marker, InfoWindow, Circle} from 'react-gmaps';
 
 import Navigation from '../Navigation/Navigation'
+
 import List from '../Calendar/List'
+import Chat from './Chat'
 
 @connect((store)=>{
     return {
@@ -80,11 +81,7 @@ export default class Person extends Component {
                 </Panel>
                 <br /> <br />
                 </Col>
-                <Col md={6}>
-                    <Panel header={'Chat'}>
-                        ...
-                    </Panel>
-                </Col>
+                <Chat />
             </Row>
         </div>
     }

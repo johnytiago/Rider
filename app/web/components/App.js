@@ -3,6 +3,7 @@ import { Grid } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 import { connect_socket, send_message } from '../../actions/socket'
+import { fetchUser } from '../../actions/user'
 
 import Header from './Header'
 
@@ -15,15 +16,9 @@ import Header from './Header'
 export default class App extends Component{
 
   componentDidMount = () => {
-    //this.props.dispatch(connect_socket(this.props.tecnicoID))
-    // usar o tecnicoID da API, random por agora 
-    this.props.dispatch(connect_socket(this.state.from))
+    this.props.dispatch(fetchUser()).then(
+      this.props.dispatch(connect_socket(this.props.tecnicoID)))
   }
-
-  handleSummit = event => {
-    event.preventDefault()
-    this.props.dispatch(send_message(this.props.socket, this.state.from, this.state.to, "Hello from the other side"))
-  } 
 
   render() {
     if(this.props.children.type.displayName==='Connect(Map)'){
@@ -33,6 +28,7 @@ export default class App extends Component{
       </div>
       }else{
         return <div>
+          <h1>this.props.tecnicoID</h1>
           <Header />
           <Grid>{this.props.children}</Grid>
         </div>
