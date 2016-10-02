@@ -4,6 +4,11 @@ const calendar =require('../controllers/calendar')
 const ride =require('../controllers/ride')
 const web = require('./web')
 
+function isLoggedIn(req,res,next){
+	if (req.isAuthenticated()) return next();
+	res.redirect('/');
+}
+
 module.exports = (server) => {
 
     // API
@@ -14,12 +19,12 @@ module.exports = (server) => {
 	    (req, res)=> { res.redirect('/') }
 	)
 
-	server.get('/api/users/:id', users.getUserInfo)
-	server.post('/api/users/:id', users.addUserInfo)
-	server.get('/api/calendar/:id/:day', calendar.getDay)
-	server.post('/api/rides', ride.createRide)
-	server.get('/api/rides/', ride.getRides)
-	server.get('/api/rides/:id', ride.getRideById)
+	server.get('/api/users/:id', isLoggedIn, users.getUserInfo)
+	server.post('/api/users/:id', isLoggedIn, users.addUserInfo)
+	server.get('/api/calendar/:id/:day', isLoggedIn, calendar.getDay)
+	server.post('/api/rides', isLoggedIn, ride.createRide)
+	server.get('/api/rides/', isLoggedIn, ride.getRides)
+	server.get('/api/rides/:id', isLoggedIn,  ride.getRideById)
 
 
 
