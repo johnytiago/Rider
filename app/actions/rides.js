@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { socket } from './socket'
-
 
 export function fetchRides(person, date){
     dispatch({type: "FETCH_RIDES"})
