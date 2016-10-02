@@ -1,17 +1,19 @@
 const express = require('express')
 
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const server = require('express')();
+const http = require('http').Server(server)
+const io = require('socket.io')(http);
+const passport = require("passport")
+const mongoose = require("mongoose")
 
 const routes = require('./routes/routes')
 
-var users = {} 
+var users = {}
 
 io.on('connection', socket => {
 
   socket.on('set_tecnicoID', (tecnicoID, cb) => {
-    if ( users[ tecnicoID ] ) 
+    if ( users[ tecnicoID ] )
       return cb("TecnicoID already exists")
 
     users[tecnicoID] = socket
@@ -23,7 +25,7 @@ io.on('connection', socket => {
   socket.on('send_message', (payload, cb) => {
     let { from , to , msg } = payload
 
-    if ( !users[to] ) 
+    if ( !users[to] )
       return cb("TecnicoID doesn't exists")
 
     users[to].emit('new_message', payload );
@@ -36,7 +38,7 @@ io.on('connection', socket => {
   socket.on('request_ride', (payload, cb) => {
     let { from , to , time, startpoint, endpoint } = payload
 
-    if ( !users[to] ) 
+    if ( !users[to] )
       return cb("TecnicoID doesn't exists")
 
     users[to].emit('ride_request', payload );
@@ -49,7 +51,7 @@ io.on('connection', socket => {
   socket.on('accept_ride', (payload, cb) => {
     let { from , to , time, startpoint, endpoint } = payload
 
-    if ( !users.to ) 
+    if ( !users.to )
       return cb("TecnicoID doesn't exists")
 
     users[to].emit('ride_confirmed', payload );
@@ -61,7 +63,7 @@ io.on('connection', socket => {
   socket.on('reject_ride', (payload, cb) => {
     let { from , to , time, startpoint, endpoint } = payload
 
-    if ( !users.to ) 
+    if ( !users.to )
       return cb("TecnicoID doesn't exists")
 
     users[to].emit('ride_rejected', payload );
@@ -75,7 +77,7 @@ io.on('connection', socket => {
   socket.on('request_phone', (payload, cb) => {
     let { from , to } = payload
 
-    if ( !users.to ) 
+    if ( !users.to )
       return cb("TecnicoID doesn't exists")
 
     users[to].emit('phone_request', payload );
@@ -88,10 +90,10 @@ io.on('connection', socket => {
   socket.on('accept_phone', (payload, cb) => {
     let { from , to } = payload
 
-    if ( !users.to ) 
+    if ( !users.to )
       return cb("TecnicoID doesn't exists")
 
-    // fetch phone 
+    // fetch phone
     // payload.phone
     users[to].emit('phone_confirmed', payload );
     users[from].emit('phone_confirmed', {from: payload.to, to:payload.from} );
@@ -110,11 +112,14 @@ io.on('connection', socket => {
   });
 })
 
-routes(app)
+require("./config/passport")( passport )
+require("./config/express")( server, passport )
 
-var port = 8080
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/rider')
 
-http.listen( port ,()=>{
-    console.log('Server running at http://localhost:' +  port )
+routes(server,passport)
+var port = process.env.PORT || 8080
+server.listen( port ,()=>{
+  console.log('Server running at http://localhost:' +  port )
 })
-
