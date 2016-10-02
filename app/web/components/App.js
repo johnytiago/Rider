@@ -17,6 +17,9 @@ export default class App extends Component{
 
   componentDidMount = () => {
     this.props.dispatch(fetchUser())
+    setTimeout(() => {
+      this.props.dispatch(connect_socket(this.props.tecnicoID))
+    }, 1000)
   }
 
   render() {
