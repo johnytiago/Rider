@@ -1,13 +1,14 @@
-
 const gulp = require('gulp')
 const webpack = require('gulp-webpack')
 const uglify = require('gulp-uglify')
-//const sass = require('gulp-sass')
+const sass = require('gulp-sass')
 const concat = require('gulp-concat')
 const cleanCSS = require('gulp-clean-css')
 const bower = require('gulp-bower')
 
 const dist = "server/public/"
+
+gulp.task('default', ['bower', 'web', 'css', 'icons', 'assets'])
 
 gulp.task('app', ()=>{
     gulp.src('app/web/main.js')
@@ -47,6 +48,11 @@ gulp.task('css',()=>{
 gulp.task('assets',()=>{
     gulp.src("webapp/images/*.*")
         .pipe(gulp.dest(dist+'images'))
+})
+
+gulp.task('web',()=>{
+    gulp.src("web/*.html")
+        .pipe(gulp.dest(dist))
 })
 
 
