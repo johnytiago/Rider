@@ -1,23 +1,26 @@
-
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, Link } from 'react-router'
 import { Provider } from 'react-redux'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 
-import Layout from './components/Layout'
 import store from '../store'
+
+import App from './components/App'
+import Intro from './components/Intro/Intro'
+import Calendar from './components/Calendar/Calendar'
+import Map from './components/Map/Map'
+import Person from './components/Person/Person'
 
 const app = document.getElementById('app')
 
 ReactDOM.render(
     <Provider store={store}>
         <Router history={browserHistory}>
-            <Route path="/" component={Intro}>
-                <Route path="/calendar" component={Calendar}/>
-                <Route path="/startpoint" component={Calendar}/>
-                <Route path="/maplist" component={Map}>
-                <Route path="/person" component={Person}>
-                <Route path="*" component={Into}/>
+            <Route path="/" component={App}>
+                <IndexRoute component={Intro}/>
+                <Route path="/calendar" component={Calendar} />
+                <Route path="/map" component={Map} />
+                <Route path="/person" component={Person} />
             </Route>
         </Router>
     </Provider>

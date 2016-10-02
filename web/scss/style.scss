@@ -1,5 +1,88 @@
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,700,300);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,300);
+@import url(https://fonts.googleapis.com/css?family=Raleway:100,200,200i,400,400i);
+$font-family-base: 'Roboto', sans-serif;
 $font-family-base: 'Raleway', sans-serif;
 // Import bootstrap and fontawesome
 @import "bootstrap";
 @import "font-awesome";
+
+html, body {
+    overflow-x: hidden;
+}
+.intro {
+  font-family: 'Raleway', sans-serif;
+}
+.intro h1 {
+  font-size: 60px;
+  font-weight: 600;
+  font-style: italic;
+  text-align: center;
+}
+.intro h1 > span {
+  font-size: 63px;
+}
+.intro p {
+  text-align: center;
+  font-weight: 400;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.intro-button {
+  width: 45%;
+  height: 90px;
+  font-size: 4vw;
+}
+.start_event {
+    border: none;
+    border-top: 1px solid #ddd !important;
+}
+.event {
+    border: none;
+}
+.schedule .list-group-item {
+    max-height: 22px;
+    padding-top: 2px;
+    text-align: center;
+}
+.schedule {
+    height: calc( 100% - 240px);
+    overflow-y: scroll;
+}
+.schedule li.list-group-item {
+    min-width:46px;
+    padding: 1px ;
+    text-align: center;
+}
+.schedule-header .panel {
+    min-width:46px;
+}
+.schedule-header .panel{
+    margin-bottom: 0;
+    max-height: 40px;
+    overflow-y: hidden;
+    .panel-title {
+        line-height: 23px;
+    }
+}
+.matches {
+
+    overflow-x: hidden;
+
+    width: calc(100% - 40px);
+    position:absolute;
+    z-index: 999;
+    bottom:30px;
+    left: 30px;
+    max-width:350px;
+    .list-group {
+        overflow-y: scroll;
+        max-height: 150px;
+    }
+    .list-group-item {
+        margin-top:3px;
+    }
+    .panel {
+        border: none;
+        background: none;
+    }
+}
