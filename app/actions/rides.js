@@ -21,6 +21,12 @@ export function addTmpRide(date){
     }
 }
 
+export function setTmpRideLocation(f,t){
+    return (dispatch)=>{
+        dispatch({type: 'ADD_TMP_RIDE',payload:{f,t}})
+    }
+}
+
 export function addRide(startpoint,endpoint,date){
     dispatch({type: 'ADD_RIDE'})
     return (dispatch)=>{

@@ -14,7 +14,7 @@ import Day from './Day'
 @connect((store)=>{
     return {
         calendar : store.calendar.calendar,
-        tmp : store.rides.tmp,
+        tmp : store.rides.tmp.rides,
         error : store.calendar.error
     }
 })
@@ -58,12 +58,11 @@ export default class Calendar extends Component {
         this.props.dispatch(fetchDay('me',this.today(3)))
     }
     render() {
-        this.state.hours = this.props.tmp
         let events = this.props.calendar
         return <div>
             <Navigation state='calendar' />
             <Row>
-                <Col md={3}> <List hours={this.state.hours} /> </Col>
+                <Col md={3}> <List hours={this.props.tmp} /> </Col>
                 <Col md={9}> <Schedule addHour={this.addHour.bind(this)} removeHour={this.removeHour.bind(this)} events={events} /> </Col>
             </Row>
         </div>
