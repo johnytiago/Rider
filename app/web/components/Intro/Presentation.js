@@ -6,17 +6,26 @@ import { Link } from 'react-router'
 import { Jumbotron } from 'react-bootstrap'
 
 export default class Intro extends Component {
-    render() {
-        return <div>
-            <Jumbotron>
-                <h1>IST Rider</h1>
-                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-                <p>
-                    <Link to='calendar'>
-                        <Button bsStyle="primary">Getting started</Button>
-                    </Link>
-                </p>
-             </Jumbotron>
-        </div>
-    }
+  render() {
+    return (
+      <div>
+        <Jumbotron className="intro">
+          <h1>Welcome to <span>IST Rider</span></h1>
+          <p>
+            We are a rides app that focuses on serving students from the
+            IST community, mainly because of the benefits that the fenix API gives us
+          </p>
+          <p>
+            We are going to help you find a ride to either the Alameda or the Tagus Park campus
+            by suggesting other people that have similar daily routines.
+          </p>
+          <div class="center-block" style={{textAlign: "center"}}>
+            <Link to='calendar'>
+              <Button bsStyle="primary" bsSize="large" className="intro-button">Getting started</Button>
+            </Link>
+          </div>
+        </Jumbotron>
+      </div>
+    )
+  }
 }
