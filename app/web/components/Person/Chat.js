@@ -31,11 +31,10 @@ export default class Chat extends Component {
 
   handleSummit = event => {
     event.preventDefault()
-    if ( event.keyCode === 14 && this.state.msg ) {
+    if ( event.keyCode === 13 ) {
 	    this.props.dispatch(send_message(this.props.socket, this.props.tecnicoID, Number(this.state.to), this.state.msg))
 	    this.setState({ msgs: [{ from: this.props.tecnicoID, to: Number(this.state.to), msg: this.state.msg }, ...this.state.msgs ]})
     }
-    event.target.value = ""
   } 
 
   handleChangeMsg = event => {
