@@ -22,6 +22,10 @@ export default class Schedule extends Component {
         let events = this.props.events
         let blocks = []
         for(let i=0; i<hours.length; i++){
+            if(events.length ==0){
+                blocks.push(<Event add={this.props.add} remove={this.props.remove} date={this.props.date+' '+hours[i]} key={i} />)
+                continue
+            }
             if(events[last].end.substring(11,16) === hours[i]){
                 last_acronym = null
                 if(last<events.length-1)

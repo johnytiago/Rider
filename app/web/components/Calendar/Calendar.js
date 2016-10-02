@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import { fetchDay } from '../../../actions/calendar'
-import { addTmpRide } from '../../../actions/rides'
+import { addTmpRide, removeTmpRide } from '../../../actions/rides'
 
 import Navigation from '../Navigation/Navigation'
 import Schedule from './Schedule'
@@ -50,6 +50,7 @@ export default class Calendar extends Component {
         this.setState({
             hours
         })
+        this.props.dispatch(removeTmpRide(h))
     }
     componentWillMount(){
         this.props.dispatch(fetchDay('me',this.today(0)))

@@ -20,6 +20,11 @@ export function addTmpRide(date){
         dispatch({type: 'ADD_TMP_RIDE',payload:date})
     }
 }
+export function removeTmpRide(date){
+    return (dispatch)=>{
+        dispatch({type: 'REMOVE_TMP_RIDE',payload:date})
+    }
+}
 
 export function setTmpRideLocation(f,t){
     return (dispatch)=>{

@@ -41,8 +41,22 @@ export default function reducer(state={
             }
         }
     }
+    if(action.type === "REMOVE_TMP_RIDE"){
+        let rides = state.tmp.rides.concat([])
+        rides.splice(rides.indexOf(action.payload),1)
+        let f = state.tmp.from
+        let t = state.tmp.to
+        return {
+            ...state,
+            tmp: {
+                from: f,
+                to: t,
+                rides
+            }
+        }
+    }
     return state
- 
+
   if(action.type === "SOCKET_RIDE_REQUEST") {
     let { driver, startpoint, endpoint, time } = action.payload
     if (!state.rides[driver])
@@ -50,16 +64,16 @@ export default function reducer(state={
     state.msgs[driver] = [ ...state.rides[driver], { driver, startpoint, endpoint, time, status: 1  }]
     return {
       ...state,
-      rides: state.rides, 
-      fetching: true, 
+      rides: state.rides,
+      fetching: true,
       fetched: false,
       error: null
     }
   }
-  if(action.type === "SOCKET_RIDE_REQUEST_ERROR") 
+  if(action.type === "SOCKET_RIDE_REQUEST_ERROR")
     return {
-      ...state, 
-      fetching: false, 
+      ...state,
+      fetching: false,
       fetched: true,
       error: action.payload
     }
@@ -68,8 +82,8 @@ export default function reducer(state={
     state.msgs[driver] = [ ...state.rides[driver], { driver, startpoint, endpoint, time, status: 2  }]
     return {
       ...state,
-      rides: state.rides, 
-      fetching: false, 
+      rides: state.rides,
+      fetching: false,
       fetched: true,
       error: null
     }
@@ -79,8 +93,8 @@ export default function reducer(state={
     state.msgs[driver] = [ ...state.rides[driver], { driver, startpoint, endpoint, time, status: 3 }]
     return {
       ...state,
-      rides: state.rides, 
-      fetching: false, 
+      rides: state.rides,
+      fetching: false,
       fetched: true,
       error: null
     }

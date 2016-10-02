@@ -17,14 +17,13 @@ module.exports.filterByDay = function (username, date_str, callback){
 	console.log(date);
 
 	User.findOne({'username': username}, function(err, user){
-
+		
 		var filtered = collection.filter(user.calendar, function(item){
-
+			
 			return date.getFullYear() === item.start.getFullYear() &&
 					date.getMonth() === item.start.getMonth() &&
 					date.getDate() === item.start.getDate()});
-
-		console.log(filtered);
+		
 		
 		var ordered = collection.sortBy(filtered, [
 			function(o) { return o.start.getHours(); },
@@ -62,7 +61,7 @@ module.exports.addCalendar = function (username, data, callback){
 		brick = {acronym: getCourseAcronym(e.course.name),
 				start: start_date,
 				end: end_date};
-
+		
 		parsed.push(brick);
 
 	})
