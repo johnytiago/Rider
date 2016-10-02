@@ -50,6 +50,7 @@ export default class Calendar extends Component {
         this.setState({
             hours
         })
+        this.props.dispatch(removeTmpRide(h))
     }
     componentWillMount(){
         this.props.dispatch(fetchDay('me',this.today(0)))

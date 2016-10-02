@@ -8,10 +8,14 @@ export default function reducer(state={
         return {...state, fetching: true, fetched: false}
     if(action.type === "FETCH_DAY_FULFILLED"){
         let calendar = {...state.calendar }
-        calendar[action.payload[0].start.substring(0,10)] = action.payload
-         return {
+        calendar[action.payload.date.substring(0,10)] = action.payload.events
+        const ordered = {};
+        Object.keys(calendar).sort().forEach(function(key) {
+          ordered[key] = calendar[key];
+        });
+        return {
             ...state,
-            calendar ,
+            calendar: ordered,
             fetching: false,
             fetched: true,
             error: null

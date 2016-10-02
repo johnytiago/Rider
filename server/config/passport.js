@@ -79,6 +79,7 @@ module.exports = function(passport){
                             return done(err);
 
                         fenix.calendar(accessToken ,function(err,res){
+
                             Filter.addCalendar(profile.username,res,function(err,out){});
                         });
                         

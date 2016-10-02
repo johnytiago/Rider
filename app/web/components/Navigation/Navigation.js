@@ -16,11 +16,11 @@ export default class Navigation extends Component {
             <Breadcrumb>
                 <Grid>
                      <Row className="show-grid">
-                        <Step link='/calendar' active={active.calendar} title="Calendar" description="Bla bla bla" />
+                        <Step link='/calendar' active={active.calendar} title="Calendar" description="Schedule start time" />
                         <Next />
-                        <Step link='/map' active={active.map} title="Map" description="Bla bla bla" />
+                        <Step link='/map' active={active.map} title="Map" description="Choose a driver" />
                         <Next />
-                        <Step link='/person' active={active.person} title="Person" description="Bla bla bla" />
+                        <Step link='/person' active={active.person} title="Person" description="Contact the driver" />
                      </Row>
                 </Grid>
             </Breadcrumb>

@@ -20,9 +20,9 @@ export default class Intro extends Component {
             by suggesting other people that have similar daily routines.
           </p>
           <div class="center-block" style={{textAlign: "center"}}>
-            <Link to='calendar'>
-              <Button bsStyle="primary" bsSize="large" className="intro-button">Getting started</Button>
-            </Link>
+              <a href="/auth/fenix">
+                <Button bsStyle="primary" bsSize="large" className="intro-button">Getting started</Button>
+            </a>
           </div>
         </Jumbotron>
       </div>

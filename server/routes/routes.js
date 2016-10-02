@@ -15,7 +15,7 @@ module.exports = (server, passport) => {
 
 	server.get('/auth/fenix/callback',
 		passport.authenticate('oauth2', { failureRedirect: '/login' }),
-	    (req, res)=> { res.redirect('/') }
+	    (req, res)=> { res.redirect('/calendar') }
 	)
 
 	server.get('/logout', function(req, res) {
