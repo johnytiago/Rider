@@ -18,6 +18,11 @@ module.exports = (server, passport) => {
 	    (req, res)=> { res.redirect('/') }
 	)
 
+	server.get('/logout', function(req, res) {
+    	req.logout();
+    	res.redirect('/');
+	});
+
 	server.get('/api/users/:id', isLoggedIn, users.getUserInfo)
 	server.post('/api/users/:id', isLoggedIn, users.addUserInfo)
 	server.get('/api/calendar/:id/:day', isLoggedIn, calendar.getDay)
