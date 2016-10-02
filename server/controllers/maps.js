@@ -1,7 +1,9 @@
 const Users = require("../models/user");
-const Maps = require("../services/maps")
+const Rides = require("../models/ride");
+const Maps = require("../services/maps");
+var collection = require('lodash/collection');
 
-module.exports.getMatches = function(req, res){
+module.exports.addRide = function(username, start, end, date_in, callback){
 
 	var matches = [];
 	var len;
@@ -18,10 +20,22 @@ module.exports.getMatches = function(req, res){
 
 				});
 
-				brick = {o.username, len, o.name, o.driver, o.home};
+				brick = {username: o.username,
+							distance: len,
+							name: o.name,
+							driver: o.driver,
+							location: o.home};
+
 				matches.push(brick);
 			});
 
 		});
+
 	});
+
+	var ordered = collection.sortBy(matches, ['driver', 'distance']);
+
+	var out = {startPoint: start, endPoint: end, date: date_in, matches: ordered};
+
+	callback(null, out);
 }
