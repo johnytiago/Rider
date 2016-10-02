@@ -1,45 +1,34 @@
-const Ride  = require("../models/ride");
+const Rides  = require("../models/ride");
+const Users  = require("../models/user");
 const Maps = require("../controllers/maps")
 
-module.exports.getRide = function(req,res){
+module.exports.getRides = function(req, res){
 
-	let id = req.params.id;
-	let start = req.params.startPoint;
-	let end = req.params.endPoint;
-	let date_in = req.params.date;
+	Rides.find({}, function(err, rides){
+		res.json(rides);
+	});	
+}
 
-	Maps.getRef(id, start, end, date_in, function(err, out){
-		res.json(out);
-	};
-};
+module.exports.getRideById = function(req, res){
 
-module.exports.createRide = function(username,res){
+	Rides.findById(req.params.id, function (err, ride) {
+    	res.json(ride);
+  	});
+}
 
-	User.findOne({'username': username}, function(err, user){
+module.exports.createRide = function(req, res){
 
-		if(user.driver){
-			Ride.create({
-				driver: user.username,
-				startPoint: req.startPoint,
-				endPoint: req.endPoint,
-				date: req.date
-			});
-		}else{
+	Users.findOne({'username': req.user.username}, function(err, user){
 
-			var pass_list = [];
-			pass_list.push(user.username);
+		if(user){
 
-			Ride.create({
-				passengers: pass_list,
-				startPoint: req.startPoint,
-				endPoint: req.endPoint,
-				date: req.date
+			var date_f = new Date(req.body.date);
+
+			Rides.create({
+				startPoint: req.body.startPoint,
+				endPoint: req.body.endPoint,
+				date: date_f
 			});
 		}
 	});
 }
-
-
-
-
-

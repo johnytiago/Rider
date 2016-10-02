@@ -17,7 +17,8 @@ module.exports = (server) => {
 	server.get('/api/users/:id', users.getUserInfo)
 	server.get('/api/calendar/:id/:day', calendar.getDay)
 	server.post('/api/rides', ride.createRide)
-	server.get('/api/rides/:id', ride.getRide)
+	server.get('/api/rides/', ride.getRides)
+	server.get('/api/rides/:id', ride.getRideById)
 
 
 

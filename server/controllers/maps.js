@@ -3,37 +3,33 @@ const Rides = require("../models/ride");
 const Maps = require("../services/maps");
 var collection = require('lodash/collection');
 
-module.exports.getRef = function(username, start, end, date_in, callback){
+module.exports.getMatches = function(start, end, date_in, callback){
 
 	var matches = [];
 	var len;
 
-	Users.findOne({'username' = id}, function(err, user){
+	Users.find({}, function(err, others){
 
-		Users.find({}, function(err, others){
+		others.forEach((o)=>{
 
-			others.forEach((o)=>{
+			Maps.getAPI(start, o.home, function(err, res){
 
-				Maps.getAPI(user.home, o.home, function(err, res){
+				len = res.rows[0].elements[0].distance.value;
 
-					len = res.rows[0].elements[0].distance.value;
-
-				});
-
-				brick = {username: o.username,
-							distance: len,
-							name: o.name,
-							driver: o.driver,
-							location: o.home};
-
-				matches.push(brick);
 			});
 
+			brick = {username: o.username,
+						distance: len,
+						name: o.name,
+						driver: o.driver,
+						location: o.home};
+
+			matches.push(brick);
 		});
 
 	});
 
-	var ordered = collection.sortBy(matches, ['driver', 'distance']);
+	var ordered = collection.sortBy(matches, ['distance']);
 
 	var out = {startPoint: start, endPoint: end, date: date_in, matches: ordered};
 
