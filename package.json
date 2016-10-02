@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/server",
     "native": "node node_modules/react-native/local-cli/cli.js start",
-    "watch": "nodemon --exec 'npm start' -e '*'"
+    "watch": "nodemon -e '*' server/server"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "babel-plugin-react-html-attrs": "^2.0.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-es2015": "^6.14.0",
+    "babel-preset-node6": "^11.0.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.16.0",
     "gulp": "^3.9.1",
@@ -47,6 +48,8 @@
     "redux-logger": "^2.6.1",
     "redux-promise-middleware": "^4.0.0",
     "redux-thunk": "^2.1.0",
-    "sendgrid": "^4.4.0"
+    "sendgrid": "^4.4.0",
+    "socket.io": "^1.4.8",
+    "socket.io-client": "^1.4.8"
   }
 }
