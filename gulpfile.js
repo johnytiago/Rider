@@ -1,4 +1,3 @@
-
 const gulp = require('gulp')
 const webpack = require('gulp-webpack')
 const uglify = require('gulp-uglify')
@@ -8,6 +7,8 @@ const cleanCSS = require('gulp-clean-css')
 const bower = require('gulp-bower')
 
 const dist = "server/public/"
+
+gulp.task('default', ['bower', 'web', 'css', 'icons', 'assets', 'app'])
 
 gulp.task('app', ()=>{
     gulp.src('app/web/main.js')
