@@ -77,16 +77,16 @@ io.on('connection', socket => {
   // ============== PHONE ================
 
   socket.on('request_phone', (payload, cb) => {
-    let { from , to } = payload
+    let { from , to, email } = payload
 
-    if ( !users.to )
+    if ( !users[to] )
       return cb("TecnicoID doesn't exists")
 
     users[to].emit('phone_request', payload );
     console.log( "Phone request\n", "From:", from, "To:", to)
     //guardar estado da ride na db
     //enviar mail
-    sendMail(to, "RIDER - Phone Exchange Request", "The user "+from+" just asked you for your phone number")
+    sendMail(email, "RIDER - Phone Exchange Request", "The user "+from+" just asked you for your phone number")
     return cb(null)
   })
 
@@ -98,9 +98,9 @@ io.on('connection', socket => {
 
     // fetch phone
     // payload.phone
-    users[to].emit('phone_confirmed', payload );
-    users[from].emit('phone_confirmed', {from: payload.to, to:payload.from} );
-    console.log( "Phone confirmed\n", "From:", from, "To:", to, "Phone:", phone)
+    //users[to].emit('phone_confirmed', payload );
+    //users[from].emit('phone_confirmed', {from: payload.to, to:payload.from} );
+    console.log( "Phone confirmed\n", "From:", from, "To:", to, "Phone:" )
     //guardar estado da ride na db
     return cb(null)
   })

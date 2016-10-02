@@ -7,11 +7,15 @@ import {Gmaps, Marker, InfoWindow, Circle} from 'react-gmaps';
 
 import Navigation from '../Navigation/Navigation'
 
+import { request_phone } from '../../../actions/socket'
+
 import List from '../Calendar/List'
 import Chat from './Chat'
 
 @connect((store)=>{
     return {
+	tecnicoID : store.user.user.tecnicoID,
+        socket: store.user.socket,
         calendar : store.calendar.calendar,
         tmp : store.rides.tmp,
         error : store.calendar.error
@@ -22,14 +26,21 @@ export default class Person extends Component {
     constructor(){
         super()
         this.state = {
+	    to: 78058,
+		email: "joaosao10@gmail.com",
             hours : []
         }
+    }
+
+    handleClick() {
+	this.props.dispatch(request_phone(this.props.socket, this.props.tecnicoID, this.state.to, this.state.email))
+	window.alert("Email sent " )
     }
 
     render(){
         this.state.hours = this.props.tmp
         let footer = <div>
-            <Button bsStyle='primary'><Glyphicon glyph="phone" /> Ask for phone number</Button>
+            <Button bsStyle='primary' onClick={this.handleClick.bind(this)}><Glyphicon glyph="phone" /> Ask for phone number</Button>
             <span class='pull-right'>
                 <Button bsStyle='success'><Glyphicon glyph="ok" /> Confirm ride</Button>
             </span>

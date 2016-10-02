@@ -58,9 +58,9 @@ export function send_message(socket, from, to, message){
   }
 }
 
-export function request_phone(socket, from, to){
+export function request_phone(socket, from, to, email){
   return (dispatch) => {
-    socket.emit('request_phone', {from, to} , (err) => {
+    socket.emit('request_phone', {from, to, email} , (err) => {
       if ( err )
         return dispatch({ type: "SOCKET_PHONE_REQUEST_ERROR", payload: err })
       return dispatch({type: "SOCKET_PHONE_REQUEST"}, payload: to)
