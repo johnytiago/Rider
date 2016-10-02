@@ -7,7 +7,7 @@ module.exports.getUserInfo  = function(req,res) {
 	}
 	Users.findOne({username:id},function(err,user){
 		let users={
-				username: 		user.username,
+				username: 		user.username.substring(4),
 				name: 			user.name,
 				driver: 		user.driver,
 				location: 		user.location,
